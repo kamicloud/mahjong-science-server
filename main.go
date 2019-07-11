@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
-	"mahjong-science-server/routes"
+	"github.com/kamicloud/mahjong-science-server/routes"
 )
 
 func main() {
