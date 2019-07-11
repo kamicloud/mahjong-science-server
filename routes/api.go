@@ -1,8 +1,8 @@
 package routes
 
 import (
-	"awesomeProject/app/http/controllers"
 	"github.com/gin-gonic/gin"
+	"github.com/kamicloud/mahjong-science-server/app/http/controllers"
 )
 
 func registerApi(g *gin.Engine) {
