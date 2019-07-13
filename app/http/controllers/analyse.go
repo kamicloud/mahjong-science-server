@@ -6,14 +6,21 @@ import (
 	"github.com/EndlessCheng/mahjong-helper/util/model"
 	"github.com/gin-gonic/gin"
 	"github.com/kamicloud/mahjong-science-server/app/http/dtos"
-	"strconv"
 )
-
 
 type FormPing struct {
 	Tiles string `json:"tiles" binding:"required"`
 }
 
+func SortResult(results []dtos.Choice) {
+	for i := 0; i < len(results); i++ {
+		for j := i + 1; j < len(results); j++ {
+			if results[i].DrawCount < results[j].DrawCount {
+				results[i], results[j] = results[j], results[i]
+			}
+		}
+	}
+}
 
 func buildResponse(playerInfo *model.PlayerInfo, shanten int, results util.Hand14AnalysisResultList, incShantenResults util.Hand14AnalysisResultList) gin.H {
 	var choices = make([]dtos.Choice, 0)
@@ -37,15 +44,40 @@ func buildResponse(playerInfo *model.PlayerInfo, shanten int, results util.Hand1
 		incShantenChoices = append(incShantenChoices, incShantenChoice)
 	}
 
+	SortResult(choices)
+	SortResult(incShantenChoices)
 	return gin.H{
 		"status": 0,
 		"data": dtos.AnalyseResponse{
+			CurrentTileString: util.Tiles34ToStr(playerInfo.HandTiles34),
 			Shanten:           shanten,
 			CurrentTiles:      playerInfo.HandTiles34,
 			Choices:           choices,
 			IncShantenChoices: incShantenChoices,
 		},
 	}
+}
+
+func RandomTile34() []int {
+	var tile34 = make([]int, 34)
+	for i := 0; i < 14; i++ {
+		util.RandomAddTile(tile34)
+	}
+	return tile34
+}
+
+func Random(c *gin.Context) {
+	var tiles34 = RandomTile34()
+
+	var playerInfo *model.PlayerInfo
+
+	playerInfo = model.NewSimplePlayerInfo(tiles34, nil)
+
+	util.CountOfTiles34(playerInfo.HandTiles34)
+	// 分析手牌
+	shanten, results14, incShantenResults := util.CalculateShantenWithImproves14(playerInfo)
+
+	c.JSON(200, buildResponse(playerInfo, shanten, results14, incShantenResults))
 }
 
 func Analyse(c *gin.Context) {
@@ -55,8 +87,8 @@ func Analyse(c *gin.Context) {
 
 	if err != nil {
 		c.JSON(200, gin.H{
-			"status":  0,
-			"message": "failed",
+			"status":  1,
+			"message": "参数错误",
 		})
 		return
 	}
@@ -66,13 +98,18 @@ func Analyse(c *gin.Context) {
 	//tiles34, _, _ := util.StrToTiles34("244078m137p66789s")
 	tiles34, _, err := util.StrToTiles34(param.Tiles)
 
-	tileCount := util.CountOfTiles34(tiles34)
-
-	if tileCount%3 == 0 {
+	if tiles34 == nil {
 		c.JSON(200, gin.H{
 			"status":  1,
-			"message": "输入牌数为" + strconv.Itoa(tileCount) + "，不合法",
+			"message": "输入格式非法",
 		})
+		return
+	}
+
+	tileCount := util.CountOfTiles34(tiles34)
+
+	if tileCount%3 == 0 || tileCount%3 == 1 {
+		util.RandomAddTile(tiles34)
 	}
 
 	playerInfo = model.NewSimplePlayerInfo(tiles34, nil)
@@ -84,9 +121,9 @@ func Analyse(c *gin.Context) {
 	c.JSON(200, buildResponse(playerInfo, shanten, results14, incShantenResults))
 }
 
-func sortResults(results util.Hand14AnalysisResultList)  {
-	for i:= 0; i < len(results);i++ {
-		for j:= 0; j < len(results) ;j ++ {
+func sortResults(results util.Hand14AnalysisResultList) {
+	for i := 0; i < len(results); i++ {
+		for j := 0; j < len(results); j ++ {
 			if results[i].Result13.AvgNextShantenWaitsCount < results[j].Result13.AvgNextShantenWaitsCount {
 				results[i], results[j] = results[j], results[i]
 			}

@@ -7,4 +7,5 @@ import (
 
 func registerApi(g *gin.Engine) {
 	g.POST("/ping", controllers.Analyse)
+	g.POST("/random", controllers.Random)
 }

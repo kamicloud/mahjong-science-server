@@ -1,6 +1,7 @@
 package dtos
 
 type AnalyseResponse struct {
+	CurrentTileString string   `json:"currentTileString"`
 	Shanten           int      `json:"shanten"`
 	CurrentTiles      []int    `json:"currentTiles"`
 	Choices           []Choice `json:"choices"`
