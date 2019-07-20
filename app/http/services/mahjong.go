@@ -6,6 +6,7 @@ import (
 	"github.com/kamicloud/mahjong-science-server/app/exceptions"
 	"github.com/kamicloud/mahjong-science-server/app/http/dtos"
 	"github.com/kamicloud/mahjong-science-server/app/http/mapper"
+	"strconv"
 )
 
 func Analyse(message *dtos.AnalyseMessage) *exceptions.Exception {
@@ -21,6 +22,12 @@ func Analyse(message *dtos.AnalyseMessage) *exceptions.Exception {
 
 	if tileCount%3 == 0 || tileCount%3 == 1 {
 		util.RandomAddTile(tiles34)
+	}
+
+	tileCount = util.CountOfTiles34(tiles34)
+
+	if tileCount > 14 {
+		return &exceptions.Exception{Status: exceptions.CustomError, Message: "输入手牌数量不符" + strconv.Itoa(tileCount)}
 	}
 
 	playerInfo := model.NewSimplePlayerInfo(tiles34, nil)
@@ -43,6 +50,12 @@ func AnalyseArray(request dtos.AnalyseArrayRequest) (*dtos.AnalyseArrayResponse,
 
 	if tileCount%3 == 0 || tileCount%3 == 1 {
 		util.RandomAddTile(tiles34)
+	}
+
+	tileCount = util.CountOfTiles34(tiles34)
+
+	if tileCount > 14 {
+		return nil, &exceptions.Exception{Status: exceptions.CustomError, Message: "输入手牌数量不符" + strconv.Itoa(tileCount)}
 	}
 
 	playerInfo := model.NewSimplePlayerInfo(tiles34, nil)
