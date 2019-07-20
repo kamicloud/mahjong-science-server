@@ -75,6 +75,14 @@ func Random(c *gin.Context) {
 	}))
 }
 
+func Group(c *gin.Context) {
+	c.JSON(200, buildResponse(exceptions.Success, "success", dtos.GroupResponse{
+		Groups: []dtos.Group{
+			{Title: "日麻杂谈", Num: "375 865 038", Content: "日本麻将技术交流，牌谱探讨"},
+		},
+	}))
+}
+
 func buildResponse(status int, message string, data interface{}) gin.H {
 	return gin.H{
 		"status":  status,

@@ -30,12 +30,22 @@ type AnalyseArrayResponse struct {
 	Result TileAnalyseResult `json:"result"`
 }
 
+type GroupResponse struct {
+	Groups []Group `json:"groups"`
+}
+
+type Group struct {
+	Title   string `json:"title"`
+	Num     string `json:"num"`
+	Content string `json:"content"`
+}
+
 type TileAnalyseResult struct {
 	CurrentTileString       string          `json:"currentTileString"`
 	CurrentTileSimpleString string          `json:"currentTileSimpleString"`
 	Shanten                 int             `json:"shanten"`
 	CurrentTiles            []int           `json:"currentTiles"`
-	CurrentRenderTiles		[]int			`json:"currentRenderTiles"`
+	CurrentRenderTiles      []int           `json:"currentRenderTiles"`
 	Choices                 []DiscardChoice `json:"choices"`
 	IncShantenChoices       []DiscardChoice `json:"incShantenChoices"`
 }
