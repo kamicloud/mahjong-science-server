@@ -1,39 +1,5 @@
 package dtos
 
-type BaseMessage struct {
-	Status  int
-	Message string
-}
-
-type AnalyseMessage struct {
-	Request  AnalyseRequest
-	Response AnalyseResponse
-}
-
-type AnalyseRequest struct {
-	Tiles string `json:"tiles" binding:"required"`
-}
-
-type AnalyseResponse struct {
-	Result TileAnalyseResult `json:"result"`
-}
-
-type RandomResponse struct {
-	Result TileAnalyseResult `json:"result"`
-}
-
-type AnalyseArrayRequest struct {
-	Tiles []int `json:"tiles" binding:"required"`
-}
-
-type AnalyseArrayResponse struct {
-	Result TileAnalyseResult `json:"result"`
-}
-
-type GroupResponse struct {
-	Groups []Group `json:"groups"`
-}
-
 type Group struct {
 	Title   string `json:"title"`
 	Num     string `json:"num"`

@@ -3,9 +3,10 @@ package services
 import (
 	"github.com/EndlessCheng/mahjong-helper/util"
 	"github.com/EndlessCheng/mahjong-helper/util/model"
-	"github.com/kamicloud/mahjong-science-server/app/exceptions"
-	"github.com/kamicloud/mahjong-science-server/app/http/dtos"
-	"github.com/kamicloud/mahjong-science-server/app/http/mapper"
+	"mahjong-science-server/app/exceptions"
+	"mahjong-science-server/app/http/dtos"
+	"mahjong-science-server/app/http/services/mappers"
+	"mahjong-science-server/app/managers"
 	"strconv"
 )
 
@@ -36,14 +37,15 @@ func Analyse(message *dtos.AnalyseMessage) *exceptions.Exception {
 	// 分析手牌
 	shanten, results14, incShantenResults := util.CalculateShantenWithImproves14(playerInfo)
 
-	result := mapper.MapAnalyseResult(playerInfo, shanten, results14, incShantenResults)
+	result := mappers.MapAnalyseResult(playerInfo, shanten, results14, incShantenResults)
 
 	message.Response.Result = result
 
 	return nil
 }
 
-func AnalyseArray(request dtos.AnalyseArrayRequest) (*dtos.AnalyseArrayResponse, *exceptions.Exception) {
+func AnalyseArray(message *dtos.AnalyseArrayMessage) *exceptions.Exception {
+	request := message.Request
 	tiles34 := request.Tiles
 
 	tileCount := util.CountOfTiles34(tiles34)
@@ -55,7 +57,7 @@ func AnalyseArray(request dtos.AnalyseArrayRequest) (*dtos.AnalyseArrayResponse,
 	tileCount = util.CountOfTiles34(tiles34)
 
 	if tileCount > 14 {
-		return nil, &exceptions.Exception{Status: exceptions.CustomError, Message: "输入手牌数量不符" + strconv.Itoa(tileCount)}
+		return &exceptions.Exception{Status: exceptions.CustomError, Message: "输入手牌数量不符" + strconv.Itoa(tileCount)}
 	}
 
 	playerInfo := model.NewSimplePlayerInfo(tiles34, nil)
@@ -64,11 +66,29 @@ func AnalyseArray(request dtos.AnalyseArrayRequest) (*dtos.AnalyseArrayResponse,
 	// 分析手牌
 	shanten, results14, incShantenResults := util.CalculateShantenWithImproves14(playerInfo)
 
-	result := mapper.MapAnalyseResult(playerInfo, shanten, results14, incShantenResults)
+	result := mappers.MapAnalyseResult(playerInfo, shanten, results14, incShantenResults)
 
-	response := dtos.AnalyseArrayResponse{
+	message.Response = dtos.AnalyseArrayResponse{
 		Result: result,
 	}
 
-	return &response, nil
+	return nil
+}
+
+
+func Random(message *dtos.RandomMessage) *exceptions.Exception {
+	var tiles34 = managers.RandomTile34()
+
+	var playerInfo *model.PlayerInfo
+
+	playerInfo = model.NewSimplePlayerInfo(tiles34, nil)
+
+	util.CountOfTiles34(playerInfo.HandTiles34)
+	// 分析手牌
+	shanten, results14, incShantenResults := util.CalculateShantenWithImproves14(playerInfo)
+
+	message.Response = dtos.RandomResponse{
+		Result: mappers.MapAnalyseResult(playerInfo, shanten, results14, incShantenResults),
+	}
+	return nil
 }

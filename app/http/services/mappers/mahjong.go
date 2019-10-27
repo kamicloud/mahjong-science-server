@@ -1,9 +1,9 @@
-package mapper
+package mappers
 
 import (
 	"github.com/EndlessCheng/mahjong-helper/util"
 	"github.com/EndlessCheng/mahjong-helper/util/model"
-	"github.com/kamicloud/mahjong-science-server/app/http/dtos"
+	"mahjong-science-server/app/http/dtos"
 	"strings"
 )
 

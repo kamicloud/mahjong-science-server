@@ -1,12 +1,11 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
-	"github.com/kamicloud/mahjong-science-server/routes"
+	"github.com/astaxie/beego"
+	_ "mahjong-science-server/routers"
 )
 
 func main() {
-	r := gin.Default()
-	routes.Register(r)
-	r.Run() // 在 0.0.0.0:8080 上监听并服务
+	beego.Run()
 }
+

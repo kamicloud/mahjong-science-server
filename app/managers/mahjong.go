@@ -1,8 +1,6 @@
-package manager
+package managers
 
-import (
-	"github.com/EndlessCheng/mahjong-helper/util"
-)
+import "github.com/EndlessCheng/mahjong-helper/util"
 
 func RandomTile34() []int {
 	var tile34 = make([]int, 34)
@@ -11,3 +9,4 @@ func RandomTile34() []int {
 	}
 	return tile34
 }
+
