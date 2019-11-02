@@ -6,8 +6,8 @@ import (
 	"github.com/silenceper/wechat"
 	"github.com/silenceper/wechat/cache"
 	"github.com/silenceper/wechat/miniprogram"
-	"mahjong-science-server/app/exceptions"
-	"mahjong-science-server/app/http/dtos"
+	"kamicloud/mahjong-science-server/app/exceptions"
+	"kamicloud/mahjong-science-server/app/http/dtos"
 )
 
 var wxa *miniprogram.MiniProgram

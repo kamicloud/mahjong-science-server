@@ -2,7 +2,7 @@ package controllers
 
 import (
 	"github.com/astaxie/beego"
-	"mahjong-science-server/app/http/dtos"
+	"kamicloud/mahjong-science-server/app/http/dtos"
 )
 
 type GroupController struct {

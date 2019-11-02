@@ -3,10 +3,10 @@ package services
 import (
 	"github.com/EndlessCheng/mahjong-helper/util"
 	"github.com/EndlessCheng/mahjong-helper/util/model"
-	"mahjong-science-server/app/exceptions"
-	"mahjong-science-server/app/http/dtos"
-	"mahjong-science-server/app/http/services/mappers"
-	"mahjong-science-server/app/managers"
+	"kamicloud/mahjong-science-server/app/exceptions"
+	"kamicloud/mahjong-science-server/app/http/dtos"
+	"kamicloud/mahjong-science-server/app/http/services/mappers"
+	"kamicloud/mahjong-science-server/app/managers"
 	"strconv"
 )
 

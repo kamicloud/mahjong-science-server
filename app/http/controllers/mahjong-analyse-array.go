@@ -3,9 +3,9 @@ package controllers
 import (
 	"encoding/json"
 	"github.com/astaxie/beego"
-	"mahjong-science-server/app/exceptions"
-	"mahjong-science-server/app/http/dtos"
-	"mahjong-science-server/app/http/services"
+	"kamicloud/mahjong-science-server/app/exceptions"
+	"kamicloud/mahjong-science-server/app/http/dtos"
+	"kamicloud/mahjong-science-server/app/http/services"
 )
 
 type MahjongAnalyseArrayController struct {
