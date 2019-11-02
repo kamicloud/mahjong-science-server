@@ -28,7 +28,7 @@ func (c *RankController) Get() {
 	}
 
 	json.Unmarshal(bm.Get("rank4").([]byte), rank4)
-	json.Unmarshal(bm.Get("rank4").([]byte), rank3)
+	json.Unmarshal(bm.Get("rank3").([]byte), rank3)
 
 	c.Data["json"] = dtos.BaseMessage{
 		Status:  0,
