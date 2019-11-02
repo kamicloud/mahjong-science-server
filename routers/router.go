@@ -2,13 +2,16 @@ package routers
 
 import (
 	"github.com/astaxie/beego"
-	controllers2 "mahjong-science-server/app/http/controllers"
+	"mahjong-science-server/app/http/controllers"
 )
 
 func init() {
-    beego.Router("/", &controllers2.MainController{})
+    beego.Router("/", &controllers.MainController{})
 
-	beego.Router("/mahjong/random", &controllers2.RandomController{})
-	beego.Router("/mahjong/analyse", &controllers2.MahjongAnalyseController{})
-	beego.Router("/mahjong/analyse-array", &controllers2.MahjongAnalyseArrayController{})
+	beego.Router("/mahjong/random", &controllers.RandomController{})
+	beego.Router("/mahjong/rank", &controllers.RankController{})
+	beego.Router("/mahjong/group", &controllers.GroupController{})
+	beego.Router("/mahjong/analyse", &controllers.MahjongAnalyseController{})
+	beego.Router("/mahjong/analyse-array", &controllers.MahjongAnalyseArrayController{})
+	beego.Router("/wechat/code-to-session", &controllers.WechatCodeToSessionController{})
 }

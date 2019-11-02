@@ -21,3 +21,15 @@ type DiscardChoice struct {
 	Draws     []int `json:"draws"`
 	DrawCount int   `json:"drawCount"`
 }
+type RankLevel struct {
+	Id int `json:"id"`
+	Score int `json:"score"`
+}
+
+type Rank struct {
+	AccountId int `json:"accountId"`
+	AvatarId  int `json:"avatarId"`
+	Nickname  string `json:"nickname"`
+	Level RankLevel `json:"level"`
+	Level3 RankLevel `json:"level3"`
+}

@@ -21,7 +21,7 @@ func MapAnalyseResult(
 		CurrentTileSimpleString: Tiles34ToStr(playerInfo.HandTiles34),
 		Shanten:                 shanten,
 		CurrentTiles:            playerInfo.HandTiles34,
-		CurrentRenderTiles: 	 util.Tiles34ToTiles(playerInfo.HandTiles34),
+		CurrentRenderTiles:      util.Tiles34ToTiles(playerInfo.HandTiles34),
 		Choices:                 choices,
 		IncShantenChoices:       incShantenChoices,
 	}

@@ -1,5 +1,8 @@
 package dtos
 
+type CodeToSessionRequest struct {
+	Code string `json:"code"`
+}
 
 type AnalyseRequest struct {
 	Tiles string `json:"tiles" binding:"required"`
