@@ -1,7 +1,7 @@
 package test
 
 import (
-	_ "kamicloud/mahjong-science-server/routers"
+	_ "github.com/kamicloud/mahjong-science-server/routers"
 	"net/http"
 	"net/http/httptest"
 	"path/filepath"

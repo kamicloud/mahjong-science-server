@@ -3,7 +3,7 @@ package mappers
 import (
 	"github.com/EndlessCheng/mahjong-helper/util"
 	"github.com/EndlessCheng/mahjong-helper/util/model"
-	"kamicloud/mahjong-science-server/app/http/dtos"
+	"github.com/kamicloud/mahjong-science-server/app/http/dtos"
 	"strings"
 )
 

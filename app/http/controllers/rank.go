@@ -3,8 +3,8 @@ package controllers
 import (
 	"encoding/json"
 	"github.com/astaxie/beego"
-	"kamicloud/mahjong-science-server/app/http/dtos"
-	"kamicloud/mahjong-science-server/app/utils"
+	"github.com/kamicloud/mahjong-science-server/app/http/dtos"
+	"github.com/kamicloud/mahjong-science-server/app/utils"
 )
 
 type RankController struct {

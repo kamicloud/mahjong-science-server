@@ -3,11 +3,11 @@ package controllers
 import (
 	"encoding/json"
 	"github.com/astaxie/beego"
+	"github.com/kamicloud/mahjong-science-server/app/exceptions"
+	"github.com/kamicloud/mahjong-science-server/app/http/dtos"
 	"github.com/silenceper/wechat"
 	"github.com/silenceper/wechat/cache"
 	"github.com/silenceper/wechat/miniprogram"
-	"kamicloud/mahjong-science-server/app/exceptions"
-	"kamicloud/mahjong-science-server/app/http/dtos"
 )
 
 var wxa *miniprogram.MiniProgram

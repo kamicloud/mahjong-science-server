@@ -10,7 +10,7 @@ import (
 	"github.com/EndlessCheng/mahjong-helper/platform/majsoul/tool"
 	"github.com/astaxie/beego"
 	uuid "github.com/satori/go.uuid"
-	"kamicloud/mahjong-science-server/app/utils"
+	"github.com/kamicloud/mahjong-science-server/app/utils"
 	"os"
 	"time"
 )

@@ -1,4 +1,4 @@
-module kamicloud/mahjong-science-server
+module github.com/kamicloud/mahjong-science-server
 
 go 1.13
 

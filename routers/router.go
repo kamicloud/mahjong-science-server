@@ -2,7 +2,7 @@ package routers
 
 import (
 	"github.com/astaxie/beego"
-	"kamicloud/mahjong-science-server/app/http/controllers"
+	"github.com/kamicloud/mahjong-science-server/app/http/controllers"
 )
 
 func init() {
