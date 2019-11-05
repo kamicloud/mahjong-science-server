@@ -8,6 +8,10 @@ import (
 func init() {
     beego.Router("/", &controllers.MainController{})
 
+	beego.Router("/mahjong/search-player/:name", &controllers.SearchPlayerController{})
+	beego.Router("/mahjong/player-extended-stats/:id", &controllers.PlayerExtendedStatsController{})
+	beego.Router("/mahjong/player-stats/:id", &controllers.PlayerStatsController{})
+
 	beego.Router("/mahjong/random", &controllers.RandomController{})
 	beego.Router("/mahjong/rank", &controllers.RankController{})
 	beego.Router("/mahjong/group", &controllers.GroupController{})
