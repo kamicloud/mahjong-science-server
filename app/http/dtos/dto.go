@@ -27,8 +27,8 @@ type RankLevel struct {
 }
 
 type Rank struct {
-	AccountId int `json:"accountId" json:"account_id"`
-	AvatarId  int `json:"avatarId" json:"avatar_id"`
+	AccountId int `json:"account_id"`
+	AvatarId  int `json:"avatar_id"`
 	Nickname  string `json:"nickname"`
 	Level RankLevel `json:"level"`
 	Level3 RankLevel `json:"level3"`
