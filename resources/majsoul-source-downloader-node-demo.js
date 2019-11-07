@@ -3,13 +3,15 @@ const fs = require('fs');
 const _ = require('lodash')
 const path = require('path')
 const dict = require('./majsoul-source-mapping')
+const resMapping = require('./resversion')
 
 // TODO: 有时读不到文件，会遇到超时问题
 
-let downloadFile = (path, type) => {
-    https.get(`https://www.majsoul.com/1/v0.6.2.w/${path}.${type}`, (resp) => {
-        let data = '';
-        let arrayBuffer = new ArrayBuffer(8);
+let downloadFile = (path, type, prefix, next) => {
+    console.log(path)
+    let url = `https://www.majsoul.com/1/${prefix}/${path}.${type}`;
+
+    https.get(url, (resp) => {
         let chunkArray = [];
 
         // A chunk of data has been recieved.
@@ -36,10 +38,13 @@ let downloadFile = (path, type) => {
                     console.log(err)
                 }
             })
+            if (next) {
+                next()
+            }
         });
 
     }).on("error", (err) => {
-        console.log(path + "Error: " + err.message);
+        console.log(url + " Error: " + err.message);
     });
 }
 
@@ -68,7 +73,40 @@ function ensureFolder(url) {
     fs.mkdirSync(url);
 }
 
-_.map(_.get(dict, 'chest.chest_shop.rows_'), 'icon').map(url => {
-    ensureFolder(path.dirname(url))
-    downloadFile(url.substr(0, url.length - 4), url.substr(url.length - 3))
+var prev = null;
+
+let download = (url, prefix, next) => {
+    fs.exists(url, (exists) => {
+        if (!exists) {
+            ensureFolder(path.dirname(url))
+            downloadFile(url.substr(0, url.length - 4), url.substr(url.length - 3), prefix, next)
+        } else if (next) {
+            next()
+        }
+
+    })
+}
+
+Object.keys(resMapping.res).map(key => {
+    if (!key.startsWith('extendRes')) {
+        return
+    }
+    let prefix = resMapping.res[key].prefix
+    let url = key;
+    if (!prev) {
+        prev = () => {
+            download(url, prefix, null)
+        }
+    } else {
+        let temp = prev
+        prev = () => {
+            download(url, prefix, temp)
+        }
+    }
 })
+prev()
+
+function sleep(milliSeconds){
+    var startTime =new Date().getTime();
+    while(new Date().getTime()< startTime + milliSeconds);
+}
