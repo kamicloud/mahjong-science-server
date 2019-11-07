@@ -1,3 +1,5 @@
 vendor/
 .idea
 go.sum
+node_modules/
+/extendRes/
