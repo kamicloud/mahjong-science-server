@@ -13,6 +13,7 @@ func init() {
 	beego.Router("/mahjong/player-stats/:id", &controllers.PlayerStatsController{})
 
 	beego.Router("/mahjong/random", &controllers.RandomController{})
+	beego.Router("/mahjong/proxy", &controllers.ProxyController{})
 	beego.Router("/mahjong/rank", &controllers.RankController{})
 	beego.Router("/mahjong/group", &controllers.GroupController{})
 	beego.Router("/mahjong/analyse", &controllers.MahjongAnalyseController{})

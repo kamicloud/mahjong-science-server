@@ -32,4 +32,5 @@ type Rank struct {
 	Nickname  string `json:"nickname"`
 	Level RankLevel `json:"level"`
 	Level3 RankLevel `json:"level3"`
+	Title int `json:"title"`
 }

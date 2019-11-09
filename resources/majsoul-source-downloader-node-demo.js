@@ -7,10 +7,9 @@ const resMapping = require('./resversion')
 
 // TODO: 有时读不到文件，会遇到超时问题
 
-let downloadFile = (path, type, prefix, next) => {
-    console.log(path)
-    let url = `https://www.majsoul.com/1/${prefix}/${path}.${type}`;
-
+let downloadFile = (path, prefix, next) => {
+    let url = `https://www.majsoul.com/1/${prefix}/${path}`;
+    console.log(url)
     https.get(url, (resp) => {
         let chunkArray = [];
 
@@ -26,11 +25,13 @@ let downloadFile = (path, type, prefix, next) => {
             let view = new DataView(toArrayBuffer(buffer));
 
             let i = 0;
-            for (; i < buffer.byteLength; i++) {
-                view.setInt8(i, 73 ^ view.getInt8(i))
+            if (url.endsWith('.png') || url.endsWith('.jpg')) {
+                for (; i < buffer.byteLength; i++) {
+                    view.setInt8(i, 73 ^ view.getInt8(i))
+                }
             }
 
-            fs.open(`${path}.${type}`, 'w+', (err, fd) => {
+            fs.open(`res/${path}`, 'w+', (err, fd) => {
                 if (!err) {
                     fs.write(fd, toBuffer(view.buffer), () => {});
                     fs.close(fd, () => {})
@@ -46,6 +47,7 @@ let downloadFile = (path, type, prefix, next) => {
     }).on("error", (err) => {
         console.log(url + " Error: " + err.message);
     });
+
 }
 
 function toArrayBuffer(buf) {
@@ -76,10 +78,10 @@ function ensureFolder(url) {
 var prev = null;
 
 let download = (url, prefix, next) => {
-    fs.exists(url, (exists) => {
+    fs.exists('res/' + url, (exists) => {
         if (!exists) {
-            ensureFolder(path.dirname(url))
-            downloadFile(url.substr(0, url.length - 4), url.substr(url.length - 3), prefix, next)
+            ensureFolder('res/' + path.dirname(url))
+            downloadFile(url, prefix, next)
         } else if (next) {
             next()
         }
@@ -88,7 +90,7 @@ let download = (url, prefix, next) => {
 }
 
 Object.keys(resMapping.res).map(key => {
-    if (!key.startsWith('extendRes')) {
+    if (!key.startsWith('extendRes') && !key.startsWith('audio')) {
         return
     }
     let prefix = resMapping.res[key].prefix
