@@ -1,10 +1,10 @@
 package controllers
 
 import (
-	"encoding/json"
-	"github.com/astaxie/beego"
+	"github.com/kamicloud/mahjong-science-server/app"
 	"github.com/kamicloud/mahjong-science-server/app/exceptions"
 	"github.com/kamicloud/mahjong-science-server/app/http/dtos"
+	"github.com/labstack/echo"
 	"github.com/silenceper/wechat"
 	"github.com/silenceper/wechat/cache"
 	"github.com/silenceper/wechat/miniprogram"
@@ -13,10 +13,10 @@ import (
 var wxa *miniprogram.MiniProgram
 
 func init() {
-	memCache := cache.NewMemcache(beego.AppConfig.String("memcached"))
+	memCache := cache.NewMemcache(app.Config.Memcached)
 	config := &wechat.Config{
-		AppID:     beego.AppConfig.String("appId"),
-		AppSecret: beego.AppConfig.String("appSecret"),
+		AppID:     app.Config.AppId,
+		AppSecret: app.Config.AppSecret,
 		Cache:     memCache,
 	}
 	wc := wechat.NewWechat(config)
@@ -24,30 +24,20 @@ func init() {
 	wxa = wc.GetMiniProgram()
 }
 
-
-type WechatCodeToSessionController struct {
-	beego.Controller
-}
-
-func (c *WechatCodeToSessionController) Post() {
+func WechatCodeToSession(c echo.Context) error {
 	var request dtos.CodeToSessionRequest
 	var err error
 
-	err = json.Unmarshal(c.Ctx.Input.RequestBody, &request)
-
-	if err != nil {
+	if err = c.Bind(request); err != nil {
 		// err
-		c.Data["json"] = exceptions.Exception{
+		return c.JSON(200, exceptions.Exception{
 			Status:  exceptions.InvalidParameter,
 			Message: "参数错误",
-		}
-		c.ServeJSON()
-		return
+		})
 	}
 
 	result, err := wxa.Code2Session(request.Code)
 
-	c.Data["json"] = result
-
-	c.ServeJSON()
+	return c.JSON(200, result)
 }
+

@@ -8,7 +8,7 @@ import (
 	"github.com/EndlessCheng/mahjong-helper/platform/majsoul/api"
 	"github.com/EndlessCheng/mahjong-helper/platform/majsoul/proto/lq"
 	"github.com/EndlessCheng/mahjong-helper/platform/majsoul/tool"
-	"github.com/astaxie/beego"
+	"github.com/kamicloud/mahjong-science-server/app"
 	"github.com/kamicloud/mahjong-science-server/app/utils"
 	uuid "github.com/satori/go.uuid"
 	"os"
@@ -64,8 +64,8 @@ func genReqLogin(username string, password string) (*lq.ReqLogin, error) {
 }
 
 func syncRank(tp uint32) error {
-	username := beego.AppConfig.String("username")
-	password := beego.AppConfig.String("password")
+	username := app.Config.Username
+	password := app.Config.Password
 
 	endpoint, err := tool.GetMajsoulWebSocketURL()
 	if err != nil {
@@ -132,7 +132,7 @@ func syncRank(tp uint32) error {
 	} else {
 		memKey = "rank3"
 	}
-	err = bm.Put(memKey, cacheValue, 86400 * 2 * time.Second)
+	bm.Set(memKey, cacheValue, 86400 * 2 * time.Second)
 
 	return nil
 }

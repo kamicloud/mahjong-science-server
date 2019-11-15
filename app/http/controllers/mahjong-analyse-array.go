@@ -1,32 +1,23 @@
 package controllers
 
 import (
-	"encoding/json"
-	"github.com/astaxie/beego"
 	"github.com/kamicloud/mahjong-science-server/app/exceptions"
 	"github.com/kamicloud/mahjong-science-server/app/http/dtos"
 	"github.com/kamicloud/mahjong-science-server/app/http/services"
+	"github.com/labstack/echo"
 )
 
-type MahjongAnalyseArrayController struct {
-	beego.Controller
-}
+func MahjongAnalyseArray(c echo.Context) error {
 
-func (c *MahjongAnalyseArrayController) Post() {
-
-	var request dtos.AnalyseArrayRequest
+	var request = new(dtos.AnalyseArrayRequest)
 	var err error
 
-	err = json.Unmarshal(c.Ctx.Input.RequestBody, &request)
-
-	if err != nil {
+	if err = c.Bind(request); err != nil {
 		// err
-		c.Data["json"] = exceptions.Exception{
+		return c.JSON(200, exceptions.Exception{
 			Status:  exceptions.InvalidParameter,
 			Message: "参数错误",
-		}
-		c.ServeJSON()
-		return
+		})
 	}
 
 	message := dtos.AnalyseArrayMessage{
@@ -37,16 +28,12 @@ func (c *MahjongAnalyseArrayController) Post() {
 
 	if exception != nil {
 		// err
-		c.Data["json"] = exception
-		c.ServeJSON()
-		return
+		return c.JSON(200, exception)
 	}
 
-	c.Data["json"] = dtos.BaseMessage{
+	return c.JSON(200, dtos.BaseMessage{
 		Status:  0,
 		Message: "success",
 		Data:    message.Response,
-	}
-
-	c.ServeJSON()
+	})
 }

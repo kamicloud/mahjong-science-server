@@ -3,14 +3,20 @@ const fs = require('fs');
 const _ = require('lodash')
 const path = require('path')
 const dict = require('./majsoul-source-mapping')
+const resMapping = require('./resversion')
 
 // TODO: 有时读不到文件，会遇到超时问题
 
-let downloadFile = (path, type) => {
-    https.get(`https://www.majsoul.com/1/v0.6.2.w/${path}.${type}`, (resp) => {
-        let data = '';
-        let arrayBuffer = new ArrayBuffer(8);
+let downloadFile = (path, prefix, next) => {
+    let url = `https://www.majsoul.com/1/${prefix}/${path}`;
+    console.log(url)
+    https.get(url, (resp) => {
         let chunkArray = [];
+
+        // if (resp.statusCode !== 200) {
+        //     next()
+        //     return
+        // }
 
         // A chunk of data has been recieved.
         resp.on('data', (chunk) => {
@@ -24,11 +30,13 @@ let downloadFile = (path, type) => {
             let view = new DataView(toArrayBuffer(buffer));
 
             let i = 0;
-            for (; i < buffer.byteLength; i++) {
-                view.setInt8(i, 73 ^ view.getInt8(i))
+            if (url.endsWith('.png') || url.endsWith('.jpg')) {
+                for (; i < buffer.byteLength; i++) {
+                    view.setInt8(i, 73 ^ view.getInt8(i))
+                }
             }
 
-            fs.open(`${path}.${type}`, 'w+', (err, fd) => {
+            fs.open(`res/${path}`, 'w+', (err, fd) => {
                 if (!err) {
                     fs.write(fd, toBuffer(view.buffer), () => {});
                     fs.close(fd, () => {})
@@ -36,11 +44,15 @@ let downloadFile = (path, type) => {
                     console.log(err)
                 }
             })
+            if (next) {
+                next()
+            }
         });
 
     }).on("error", (err) => {
-        console.log(path + "Error: " + err.message);
+        console.log(url + " Error: " + err.message);
     });
+
 }
 
 function toArrayBuffer(buf) {
@@ -68,7 +80,45 @@ function ensureFolder(url) {
     fs.mkdirSync(url);
 }
 
-_.map(_.get(dict, 'chest.chest_shop.rows_'), 'icon').map(url => {
-    ensureFolder(path.dirname(url))
-    downloadFile(url.substr(0, url.length - 4), url.substr(url.length - 3))
+var prev = null;
+
+let download = (url, prefix, next) => {
+    fs.exists('res/' + url, (exists) => {
+        if (!exists) {
+            ensureFolder('res/' + path.dirname(url))
+            downloadFile(url, prefix, next)
+        } else if (next) {
+            next()
+        }
+
+    })
+}
+
+Object.keys(resMapping.res).map(key => {
+    if (!key.startsWith('extendRes') && !key.startsWith('audio')) {
+        return
+    }
+    let prefix = resMapping.res[key].prefix
+    let url = key;
+    if (!prev) {
+        prev = () => {
+            download(url, prefix, null)
+        }
+    } else {
+        let temp = prev
+        prev = () => {
+            download(url, prefix, temp)
+        }
+    }
 })
+
+try {
+    prev()
+
+} catch (err) {
+    console.log(err)
+}
+function sleep(milliSeconds){
+    var startTime =new Date().getTime();
+    while(new Date().getTime()< startTime + milliSeconds);
+}
