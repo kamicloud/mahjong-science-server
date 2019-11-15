@@ -435,6 +435,9 @@
         "audio/sound/xiaoniaoyouchutian/act_ron.mp3": {
             "prefix": "v0.6.74.w"
         },
+        "scene/Assets/Resource/mjpai/en/mjp_default/5m.png": {
+            "prefix": "v0.6.1.w"
+        },
         "audio/sound/qianzhi/fan_siankedanqi.mp3": {
             "prefix": "v0.6.1.w"
         },
@@ -873,6 +876,9 @@
         "en/extendRes/charactor/mingzhiyingshu_0/waitingroom.png": {
             "prefix": "v0.6.1.w"
         },
+        "jp/extendRes/charactor/kawei_0/bighead.png": {
+            "prefix": "v0.6.111.w"
+        },
         "scene/Assets/Resource/mjpai/en/mjp_default/1p.png": {
             "prefix": "v0.6.1.w"
         },
@@ -971,6 +977,9 @@
         },
         "en/extendRes/charactor/bamuwei/bighead.png": {
             "prefix": "v0.6.1.w"
+        },
+        "jp/extendRes/emo/e200010/10.png": {
+            "prefix": "v0.6.111.w"
         },
         "audio/sound/baishinainai/fan_lingshang.mp3": {
             "prefix": "v0.6.74.w"
@@ -1753,7 +1762,7 @@
             "prefix": "v0.6.1.w"
         },
         "index.html": {
-            "prefix": "v0.6.83.w"
+            "prefix": "v0.6.101.w"
         },
         "scene/Assets/Resource/effect/texture/lihuamao.lmat": {
             "prefix": "v0.6.47.w"
@@ -1956,8 +1965,8 @@
         "audio/audio_mj/winlose.mp3": {
             "prefix": "v0.6.1.w"
         },
-        "en/course/course0.png": {
-            "prefix": "v0.6.1.w"
+        "en/extendRes/charactor/kawei_0/bighead.png": {
+            "prefix": "v0.6.111.w"
         },
         "audio/sound/erjietang/lobby_levelmax.mp3": {
             "prefix": "v0.6.1.w"
@@ -2706,8 +2715,8 @@
         "extendRes/items/ron_youlingaoao.jpg": {
             "prefix": "v0.6.74.w"
         },
-        "scene/Assets/Resource/mjpai/en/mjp_yellow/8m.png": {
-            "prefix": "v0.6.1.w"
+        "extendRes/charactor/wangcilang_0/waitingroom.png": {
+            "prefix": "v0.6.2.w"
         },
         "en/extendRes/charactor/xiangyuanwu_haitanpaidui/bighead.png": {
             "prefix": "v0.6.1.w"
@@ -2749,7 +2758,7 @@
             "prefix": "v0.6.74.w"
         },
         "client_language.txt": {
-            "prefix": "v0.6.91.w"
+            "prefix": "v0.6.111.w"
         },
         "audio/sound/qianzhi/fan_pinghu.mp3": {
             "prefix": "v0.6.1.w"
@@ -2853,7 +2862,7 @@
         "scene/Assets/Resource/mjpai/mjp_yellow/3p.png": {
             "prefix": "v0.6.1.w"
         },
-        "scene/Assets/Resource/entrance/Materials/icon_color_jp.lmat": {
+        "scene/Assets/Resource/mjpai/en/mjp_default/7p.png": {
             "prefix": "v0.6.1.w"
         },
         "audio/sound/zeniya/pai_5s.mp3": {
@@ -2904,8 +2913,8 @@
         "audio/sound/xiangyuan/fan_sangangzi.mp3": {
             "prefix": "v0.6.1.w"
         },
-        "scene/Assets/Resource/mjpai/en/mjp_default/5m.png": {
-            "prefix": "v0.6.1.w"
+        "audio/sound/baishinainai/fan_xi.mp3": {
+            "prefix": "v0.6.74.w"
         },
         "scene/effect_yiman_queding_chs.lh": {
             "prefix": "v0.6.1.w"
@@ -3187,6 +3196,9 @@
             "prefix": "v0.6.1.w"
         },
         "jp/extendRes/charactor/qingku_0/waitingroom.png": {
+            "prefix": "v0.6.1.w"
+        },
+        "scene/Assets/Resource/entrance/Materials/icon_color_jp.lmat": {
             "prefix": "v0.6.1.w"
         },
         "en/extendRes/emo/e200007/12.png": {
@@ -3607,7 +3619,7 @@
             "prefix": "v0.6.1.w"
         },
         "config.json": {
-            "prefix": "v0.6.97.w"
+            "prefix": "v0.6.115.w"
         },
         "scene/Assets/Resource/effect/mesh/wanzhuangti-Cylinder001.lm": {
             "prefix": "v0.6.47.w"
@@ -3693,8 +3705,8 @@
         "scene/Assets/Resource/mjpai/mjp_green/hand.png": {
             "prefix": "v0.6.1.w"
         },
-        "extendRes/charactor/wangcilang_0/waitingroom.png": {
-            "prefix": "v0.6.2.w"
+        "jp/myres2/treasurehead/treasure_pic1911_up.png": {
+            "prefix": "v0.6.111.w"
         },
         "scene/ron_nilin.lh": {
             "prefix": "v0.6.1.w"
@@ -3990,6 +4002,9 @@
         "en/extendRes/emo/e200006/3.png": {
             "prefix": "v0.6.1.w"
         },
+        "en/myres2/treasurehead/treasure_pic1911_up.png": {
+            "prefix": "v0.6.111.w"
+        },
         "audio/sound/shala/act_tumo.mp3": {
             "prefix": "v0.6.1.w"
         },
@@ -4166,6 +4181,9 @@
         },
         "audio/sound/jiutiao/gameend_tingpai.mp3": {
             "prefix": "v0.6.1.w"
+        },
+        "extendRes/emo/e200015/17.png": {
+            "prefix": "v0.6.74.w"
         },
         "en/extendRes/emo/e200009/16.png": {
             "prefix": "v0.6.71.w"
@@ -4495,10 +4513,13 @@
             "prefix": "v0.6.1.w"
         },
         "res/config/lqc.lqbin": {
-            "prefix": "v0.6.87.w"
+            "prefix": "v0.6.112.w"
         },
         "audio/sound/zeniya/lobby_normal2.mp3": {
             "prefix": "v0.6.1.w"
+        },
+        "myres2/treasurehead/treasure_pic1911_up.png": {
+            "prefix": "v0.6.110.w"
         },
         "res/atlas/tanfang.png": {
             "prefix": "v0.6.1.w"
@@ -4747,7 +4768,7 @@
             "prefix": "v0.6.1.w"
         },
         "uiconfig/ui_chs.json": {
-            "prefix": "v0.6.94.w"
+            "prefix": "v0.6.101.w"
         },
         "en/extendRes/charactor/wangcilang_0/smallhead.png": {
             "prefix": "v0.6.1.w"
@@ -5250,9 +5271,6 @@
         "extendRes/charactor/erjietang/waitingroom.png": {
             "prefix": "v0.6.2.w"
         },
-        "en/myres2/mjp/mjp_rosered/preview.png": {
-            "prefix": "v0.6.1.w"
-        },
         "audio/sound/fuzi/fan_lingshang.mp3": {
             "prefix": "v0.6.1.w"
         },
@@ -5488,7 +5506,7 @@
             "prefix": "v0.6.2.w"
         },
         "code.js": {
-            "prefix": "v0.6.97.w"
+            "prefix": "v0.6.112.w"
         },
         "audio/sound/jianai/fan_xi.mp3": {
             "prefix": "v0.6.1.w"
@@ -5806,7 +5824,7 @@
             "prefix": "v0.6.1.w"
         },
         "ui.json": {
-            "prefix": "v0.6.94.w"
+            "prefix": "v0.6.101.w"
         },
         "scene/Assets/Resource/effect/texture/fiend_mist_new_2_sheet.lmat": {
             "prefix": "v0.6.47.w"
@@ -6375,9 +6393,6 @@
         "en/extendRes/title/zuichuhuntian3_item.jpg": {
             "prefix": "v0.6.32.w"
         },
-        "audio/sound/bamuwei/fan_dong.mp3": {
-            "prefix": "v0.6.1.w"
-        },
         "myres2/mjp/mjp_green/preview.png": {
             "prefix": "v0.6.2.w"
         },
@@ -6438,7 +6453,7 @@
         "en/extendRes/charactor/baishinainai_0/smallhead.png": {
             "prefix": "v0.6.75.w"
         },
-        "scene/Assets/Resource/mjpai/mjp_default/0m.png": {
+        "en/myres2/mjp/mjp_rosered/preview.png": {
             "prefix": "v0.6.1.w"
         },
         "jp/course/detail_course/jp_course17.png": {
@@ -7212,9 +7227,6 @@
         "audio/sound/fuzi/fan_yiqitongguan.mp3": {
             "prefix": "v0.6.1.w"
         },
-        "audio/sound/baishinainai/fan_xi.mp3": {
-            "prefix": "v0.6.74.w"
-        },
         "scene/Assets/Resource/effect/texture/lihuamao.png": {
             "prefix": "v0.6.47.w"
         },
@@ -7415,6 +7427,9 @@
         },
         "extendRes/charactor/shala_0/bighead.png": {
             "prefix": "v0.6.2.w"
+        },
+        "jp/extendRes/charactor/kawei_0/waitingroom.png": {
+            "prefix": "v0.6.111.w"
         },
         "en/extendRes/charactor/bamuwei/half.png": {
             "prefix": "v0.6.1.w"
@@ -7977,6 +7992,9 @@
         "audio/sound/qingkuniang/act_rich.mp3": {
             "prefix": "v0.6.1.w"
         },
+        "extendRes/charactor/kawei_0/smallhead.png": {
+            "prefix": "v0.6.110.w"
+        },
         "audio/sound/kawei/fan_liqi.mp3": {
             "prefix": "v0.6.1.w"
         },
@@ -8484,8 +8502,8 @@
         "scene/Assets/Resource/effect/texture/hupai/thunder.lmat": {
             "prefix": "v0.6.1.w"
         },
-        "extendRes/items/jade3.jpg": {
-            "prefix": "v0.6.2.w"
+        "en/extendRes/emo/e200010/10.png": {
+            "prefix": "v0.6.111.w"
         },
         "en/extendRes/items/mingpaizhishi_dian.jpg": {
             "prefix": "v0.6.75.w"
@@ -9189,8 +9207,8 @@
         "en/extendRes/emo/e200003/15.png": {
             "prefix": "v0.6.52.w"
         },
-        "extendRes/items/guoqingmiao.jpg": {
-            "prefix": "v0.6.51.w"
+        "audio/sound/bamuwei/fan_dong.mp3": {
+            "prefix": "v0.6.1.w"
         },
         "en/extendRes/emo/e200001/17.png": {
             "prefix": "v0.6.75.w"
@@ -9825,8 +9843,8 @@
         "extendRes/charactor/qianzhi_0/full.png": {
             "prefix": "v0.6.2.w"
         },
-        "extendRes/items/jade_pure.jpg": {
-            "prefix": "v0.6.2.w"
+        "audio/sound/sigongxiasheng/lobby_levelup0.mp3": {
+            "prefix": "v0.6.1.w"
         },
         "scene/Assets/Resource/mjpai/mjp_default/3z.png": {
             "prefix": "v0.6.1.w"
@@ -9955,7 +9973,7 @@
             "prefix": "v0.6.1.w"
         },
         "uiconfig/ui_chs_t.json": {
-            "prefix": "v0.6.94.w"
+            "prefix": "v0.6.107.w"
         },
         "jp/extendRes/charactor/xiaoniaoyouchutian/half.png": {
             "prefix": "v0.6.75.w"
@@ -10292,6 +10310,9 @@
         },
         "jp/extendRes/charactor/fuzi_haitanpaidui/smallhead.png": {
             "prefix": "v0.6.1.w"
+        },
+        "en/extendRes/emo/e200010/11.png": {
+            "prefix": "v0.6.111.w"
         },
         "audio/sound/jianai/fan_guoshiwushuang.mp3": {
             "prefix": "v0.6.1.w"
@@ -11265,6 +11286,9 @@
         "scene/Assets/Resource/effect/texture/yuanqiu2.lmat": {
             "prefix": "v0.6.47.w"
         },
+        "extendRes/items/jade3.jpg": {
+            "prefix": "v0.6.2.w"
+        },
         "myres2/mjp/mjp_default/preview.png": {
             "prefix": "v0.6.2.w"
         },
@@ -11364,6 +11388,9 @@
         "audio/sound/qingkuniang/act_ron.mp3": {
             "prefix": "v0.6.1.w"
         },
+        "jp/extendRes/items/hand_cat_blue.jpg": {
+            "prefix": "v0.6.1.w"
+        },
         "audio/sound/yiji/fan_doublenan.mp3": {
             "prefix": "v0.6.1.w"
         },
@@ -11426,6 +11453,9 @@
         },
         "audio/sound/qingkuniang/fan_dasixi.mp3": {
             "prefix": "v0.6.1.w"
+        },
+        "extendRes/emo/e200010/11.png": {
+            "prefix": "v0.6.110.w"
         },
         "en/extendRes/charactor/wangcilang_WSJ/half.png": {
             "prefix": "v0.6.75.w"
@@ -11778,6 +11808,9 @@
         "audio/sound/xiangyuan/lobby_normal2.mp3": {
             "prefix": "v0.6.1.w"
         },
+        "en/course/course0.png": {
+            "prefix": "v0.6.1.w"
+        },
         "audio/sound/yiji/gameend_yiman4.mp3": {
             "prefix": "v0.6.1.w"
         },
@@ -11855,6 +11888,9 @@
         },
         "extendRes/emo/e200009/14.png": {
             "prefix": "v0.6.39.w"
+        },
+        "extendRes/charactor/kawei_0/bighead.png": {
+            "prefix": "v0.6.110.w"
         },
         "scene/Assets/Resource/mjpai/en/mjp_rosered_0/4s.png": {
             "prefix": "v0.6.1.w"
@@ -12180,6 +12216,9 @@
         "en/myres2/treasurehead/zhongxia_reward.jpg": {
             "prefix": "v0.6.1.w"
         },
+        "jp/extendRes/emo/e200010/12.png": {
+            "prefix": "v0.6.111.w"
+        },
         "scene/effect_winlose_jp.lh": {
             "prefix": "v0.6.1.w"
         },
@@ -12423,8 +12462,8 @@
         "extendRes/charactor/yiji_0/reverse/full.png": {
             "prefix": "v0.6.5.w"
         },
-        "audio/sound/bamuwei/fan_hunquandaiyaojiu.mp3": {
-            "prefix": "v0.6.1.w"
+        "en/extendRes/charactor/kawei_0/waitingroom.png": {
+            "prefix": "v0.6.111.w"
         },
         "res/atlas/en/myres/mjdesktop.atlas": {
             "prefix": "v0.6.1.w"
@@ -12540,10 +12579,16 @@
         "audio/sound/sigongxiasheng/fan_pinghu.mp3": {
             "prefix": "v0.6.1.w"
         },
+        "course/detail_course/ch_course3.png": {
+            "prefix": "v0.6.2.w"
+        },
         "res/atlas/en/myres2/mjp/mjp_default/ui.atlas": {
             "prefix": "v0.6.1.w"
         },
         "jp/course/detail_course/jp_course20.png": {
+            "prefix": "v0.6.1.w"
+        },
+        "audio/sound/mingzhiyingshu/fan_duanyao.mp3": {
             "prefix": "v0.6.1.w"
         },
         "scene/Assets/Resource/mjpai/en/mjp_yellow/3p.png": {
@@ -12632,6 +12677,9 @@
         },
         "audio/sound/wangcilang/gameend_beiman.mp3": {
             "prefix": "v0.6.1.w"
+        },
+        "jp/extendRes/charactor/kawei_0/smallhead.png": {
+            "prefix": "v0.6.111.w"
         },
         "audio/sound/baishinainai/fan_fa.mp3": {
             "prefix": "v0.6.74.w"
@@ -13155,6 +13203,9 @@
         "audio/sound/baishinainai/act_tumo.mp3": {
             "prefix": "v0.6.74.w"
         },
+        "scene/Assets/Resource/mjpai/en/mjp_yellow/8m.png": {
+            "prefix": "v0.6.1.w"
+        },
         "clip/dist/clipboard.min.js": {
             "prefix": "v0.6.1.w"
         },
@@ -13476,6 +13527,9 @@
         "audio/sound/bamuwei/gameend_tiaoman.mp3": {
             "prefix": "v0.6.1.w"
         },
+        "jp/extendRes/charactor/kawei_0/half.png": {
+            "prefix": "v0.6.111.w"
+        },
         "res/atlas/en/myres/match_lobby.png": {
             "prefix": "v0.6.1.w"
         },
@@ -13674,8 +13728,8 @@
         "audio/sound/xiaoniaoyouchutian/fan_sansetongke.mp3": {
             "prefix": "v0.6.74.w"
         },
-        "audio/sound/yizhilaikong/fan_liujumanguan.mp3": {
-            "prefix": "v0.6.1.w"
+        "extendRes/charactor/fuzi_haitanpaidui/smallhead.png": {
+            "prefix": "v0.6.2.w"
         },
         "extendRes/emo/e200012/3.png": {
             "prefix": "v0.6.2.w"
@@ -13926,8 +13980,8 @@
         "audio/sound/erzhigonghua/fan_doublebei.mp3": {
             "prefix": "v0.6.1.w"
         },
-        "extendRes/emo/e200015/17.png": {
-            "prefix": "v0.6.74.w"
+        "jp/extendRes/charactor/kawei_0/full.png": {
+            "prefix": "v0.6.111.w"
         },
         "extendRes/items/biscuit1_limit.jpg": {
             "prefix": "v0.6.2.w"
@@ -14589,6 +14643,9 @@
         "scene/Assets/Resource/mjpai/en/mjp_green_0/0s.png": {
             "prefix": "v0.6.1.w"
         },
+        "audio/sound/bamuwei/fan_hunquandaiyaojiu.mp3": {
+            "prefix": "v0.6.1.w"
+        },
         "en/extendRes/items/denglong.jpg": {
             "prefix": "v0.6.1.w"
         },
@@ -14890,7 +14947,7 @@
             "prefix": "v0.6.51.w"
         },
         "uiconfig/ui_jp.json": {
-            "prefix": "v0.6.94.w"
+            "prefix": "v0.6.107.w"
         },
         "audio/sound/fuzi/fan_sansetongshun.mp3": {
             "prefix": "v0.6.1.w"
@@ -15001,7 +15058,7 @@
             "prefix": "v0.6.52.w"
         },
         "uiconfig/ui_en.json": {
-            "prefix": "v0.6.94.w"
+            "prefix": "v0.6.107.w"
         },
         "en/extendRes/emo/e200007/0.png": {
             "prefix": "v0.6.1.w"
@@ -15166,6 +15223,9 @@
             "prefix": "v0.6.2.w"
         },
         "res/atlas/en/myres2/mjp/mjp_yellow/ui.atlas": {
+            "prefix": "v0.6.1.w"
+        },
+        "scene/Assets/Resource/mjpai/mjp_default/0m.png": {
             "prefix": "v0.6.1.w"
         },
         "bitmapfont/youyuan_bold.fnt": {
@@ -15341,6 +15401,9 @@
         },
         "audio/sound/yiji/act_drich.mp3": {
             "prefix": "v0.6.1.w"
+        },
+        "extendRes/charactor/kawei_0/full.png": {
+            "prefix": "v0.6.110.w"
         },
         "res/atlas/bitmapfont/en.atlas": {
             "prefix": "v0.6.1.w"
@@ -15744,8 +15807,8 @@
         "scene/Assets/Resource/effect/texture/yimanqueding_4.lmat": {
             "prefix": "v0.6.1.w"
         },
-        "course/detail_course/ch_course3.png": {
-            "prefix": "v0.6.2.w"
+        "jp/extendRes/items/jade_honest.jpg": {
+            "prefix": "v0.6.1.w"
         },
         "audio/sound/erjietang/fan_fa.mp3": {
             "prefix": "v0.6.1.w"
@@ -16165,7 +16228,7 @@
             "prefix": "v0.6.74.w"
         },
         "unpack.json": {
-            "prefix": "v0.6.80.w"
+            "prefix": "v0.6.110.w"
         },
         "audio/sound/bamuwei/gameend_sifenglianda.mp3": {
             "prefix": "v0.6.1.w"
@@ -16473,7 +16536,7 @@
         "clip/demo/constructor-selector.html": {
             "prefix": "v0.6.1.w"
         },
-        "scene/Assets/Resource/mjpai/en/mjp_rosered/3p.png": {
+        "audio/sound/qianzhi/act_tumo.mp3": {
             "prefix": "v0.6.1.w"
         },
         "myres2/treasurehead/reward_20190501.jpg": {
@@ -16524,8 +16587,8 @@
         "audio/sound/qianzhi/fan_ziyise.mp3": {
             "prefix": "v0.6.1.w"
         },
-        "extendRes/title/maolianggongyingshang.png": {
-            "prefix": "v0.6.2.w"
+        "scene/Assets/Resource/effect/texture/baopai_jp01.lmat": {
+            "prefix": "v0.6.51.w"
         },
         "audio/sound/xiangyuan/fan_dasanyuan.mp3": {
             "prefix": "v0.6.1.w"
@@ -16784,6 +16847,9 @@
         },
         "audio/sound/xiangyuan/lobby_selfintro.mp3": {
             "prefix": "v0.6.1.w"
+        },
+        "extendRes/charactor/kawei_0/half.png": {
+            "prefix": "v0.6.110.w"
         },
         "en/extendRes/charactor/qianzhi_0/half.png": {
             "prefix": "v0.6.1.w"
@@ -17053,9 +17119,6 @@
             "prefix": "v0.6.1.w"
         },
         "jp/extendRes/charactor/erjietang/serious.png": {
-            "prefix": "v0.6.1.w"
-        },
-        "scene/Assets/Resource/mjpai/en/mjp_default/7p.png": {
             "prefix": "v0.6.1.w"
         },
         "myres2/treasurehead/newyear_reward.jpg": {
@@ -17577,9 +17640,6 @@
         "extendRes/items/present_yiji.png": {
             "prefix": "v0.6.39.w"
         },
-        "jp/extendRes/items/jade_honest.jpg": {
-            "prefix": "v0.6.1.w"
-        },
         "audio/sound/fuzi/lobby_normal1.mp3": {
             "prefix": "v0.6.1.w"
         },
@@ -17660,6 +17720,9 @@
         },
         "en/extendRes/emo/e200003/12.png": {
             "prefix": "v0.6.1.w"
+        },
+        "extendRes/items/guoqingmiao.jpg": {
+            "prefix": "v0.6.51.w"
         },
         "audio/sound/fuzi/fan_dora5.mp3": {
             "prefix": "v0.6.1.w"
@@ -17780,6 +17843,9 @@
         },
         "res/atlas/myres.png": {
             "prefix": "v0.6.74.w"
+        },
+        "extendRes/charactor/kawei_0/waitingroom.png": {
+            "prefix": "v0.6.110.w"
         },
         "extendRes/emo/e200010/5.png": {
             "prefix": "v0.6.2.w"
@@ -17970,6 +18036,9 @@
         "jp/extendRes/title/zuichuhuntian3.png": {
             "prefix": "v0.6.32.w"
         },
+        "en/extendRes/emo/e200010/12.png": {
+            "prefix": "v0.6.111.w"
+        },
         "extendRes/charactor/jiutiao_0/half.png": {
             "prefix": "v0.6.2.w"
         },
@@ -18105,6 +18174,9 @@
         "extendRes/charactor/yizhilaikong_0/smallhead.png": {
             "prefix": "v0.6.2.w"
         },
+        "extendRes/emo/e200010/12.png": {
+            "prefix": "v0.6.110.w"
+        },
         "audio/sound/mingzhiyingshu/act_pon.mp3": {
             "prefix": "v0.6.1.w"
         },
@@ -18173,6 +18245,9 @@
         },
         "audio/sound/yizhilaikong/fan_dora2.mp3": {
             "prefix": "v0.6.1.w"
+        },
+        "extendRes/emo/e200010/10.png": {
+            "prefix": "v0.6.110.w"
         },
         "scene/Assets/Resource/mjpai/en/mjp_rosered_0/3z.png": {
             "prefix": "v0.6.1.w"
@@ -18284,6 +18359,9 @@
         },
         "en/extendRes/items/gold1.png": {
             "prefix": "v0.6.1.w"
+        },
+        "jp/extendRes/emo/e200010/11.png": {
+            "prefix": "v0.6.111.w"
         },
         "audio/sound/jiutiao/fan_chunzhengjiulianbaodeng.mp3": {
             "prefix": "v0.6.1.w"
@@ -18498,8 +18576,8 @@
         "extendRes/emo/e200007/0.png": {
             "prefix": "v0.6.2.w"
         },
-        "jp/extendRes/items/hand_cat_blue.jpg": {
-            "prefix": "v0.6.1.w"
+        "en/extendRes/charactor/kawei_0/half.png": {
+            "prefix": "v0.6.111.w"
         },
         "en/extendRes/emo/e200012/1.png": {
             "prefix": "v0.6.1.w"
@@ -18687,8 +18765,8 @@
         "audio/sound/zeniya/pai_6m.mp3": {
             "prefix": "v0.6.1.w"
         },
-        "audio/sound/mingzhiyingshu/fan_duanyao.mp3": {
-            "prefix": "v0.6.1.w"
+        "en/extendRes/charactor/kawei_0/smallhead.png": {
+            "prefix": "v0.6.111.w"
         },
         "jp/extendRes/charactor/fuzi/half.png": {
             "prefix": "v0.6.1.w"
@@ -18773,6 +18851,9 @@
         },
         "extendRes/emo/e200015/6.png": {
             "prefix": "v0.6.2.w"
+        },
+        "en/extendRes/charactor/kawei_0/full.png": {
+            "prefix": "v0.6.111.w"
         },
         "audio/sound/shala/fan_hedi.mp3": {
             "prefix": "v0.6.1.w"
@@ -18870,8 +18951,8 @@
         "jp/extendRes/items/liqibgm.jpg": {
             "prefix": "v0.6.75.w"
         },
-        "extendRes/charactor/fuzi_haitanpaidui/smallhead.png": {
-            "prefix": "v0.6.2.w"
+        "audio/sound/yizhilaikong/fan_liujumanguan.mp3": {
+            "prefix": "v0.6.1.w"
         },
         "audio/sound/xiaoniaoyouchutian/fan_qingyise.mp3": {
             "prefix": "v0.6.74.w"
@@ -19086,7 +19167,7 @@
         "audio/sound/fuzi/fan_sianke.mp3": {
             "prefix": "v0.6.1.w"
         },
-        "audio/sound/qianzhi/act_tumo.mp3": {
+        "scene/Assets/Resource/mjpai/en/mjp_rosered/3p.png": {
             "prefix": "v0.6.1.w"
         },
         "audio/sound/kawei/fan_xi.mp3": {
@@ -19464,8 +19545,8 @@
         "en/extendRes/charactor/jianai/waitingroom.png": {
             "prefix": "v0.6.1.w"
         },
-        "audio/sound/sigongxiasheng/lobby_levelup0.mp3": {
-            "prefix": "v0.6.1.w"
+        "extendRes/items/jade_pure.jpg": {
+            "prefix": "v0.6.2.w"
         },
         "audio/sound/xiaoniaoyouchutian/fan_dihu.mp3": {
             "prefix": "v0.6.74.w"
@@ -19482,8 +19563,8 @@
         "jp/extendRes/charactor/yizhilaikong_0/waitingroom.png": {
             "prefix": "v0.6.1.w"
         },
-        "scene/Assets/Resource/effect/texture/baopai_jp01.lmat": {
-            "prefix": "v0.6.51.w"
+        "extendRes/title/maolianggongyingshang.png": {
+            "prefix": "v0.6.2.w"
         },
         "audio/sound/mingzhiyingshu/gameend_yiman4.mp3": {
             "prefix": "v0.6.1.w"
