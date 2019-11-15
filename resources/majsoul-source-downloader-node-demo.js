@@ -13,6 +13,11 @@ let downloadFile = (path, prefix, next) => {
     https.get(url, (resp) => {
         let chunkArray = [];
 
+        // if (resp.statusCode !== 200) {
+        //     next()
+        //     return
+        // }
+
         // A chunk of data has been recieved.
         resp.on('data', (chunk) => {
             chunkArray = chunkArray.concat(chunk)
@@ -106,8 +111,13 @@ Object.keys(resMapping.res).map(key => {
         }
     }
 })
-prev()
 
+try {
+    prev()
+
+} catch (err) {
+    console.log(err)
+}
 function sleep(milliSeconds){
     var startTime =new Date().getTime();
     while(new Date().getTime()< startTime + milliSeconds);

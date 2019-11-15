@@ -7,12 +7,12 @@ type BaseMessage struct {
 }
 
 type AnalyseMessage struct {
-	Request  AnalyseRequest
+	Request  *AnalyseRequest
 	Response AnalyseResponse
 }
 
 type AnalyseArrayMessage struct {
-	Request  AnalyseArrayRequest
+	Request  *AnalyseArrayRequest
 	Response AnalyseArrayResponse
 }
 

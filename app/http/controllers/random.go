@@ -1,33 +1,13 @@
 package controllers
 
 import (
-	"encoding/json"
-	"github.com/astaxie/beego"
-	"github.com/kamicloud/mahjong-science-server/app/exceptions"
 	"github.com/kamicloud/mahjong-science-server/app/http/dtos"
 	"github.com/kamicloud/mahjong-science-server/app/http/services"
+	"github.com/labstack/echo"
 )
 
-type RandomController struct {
-	beego.Controller
-}
-
-func (c *RandomController) Post() {
-
+func Random(c echo.Context) error {
 	var request dtos.RandomRequest
-	var err error
-
-	err = json.Unmarshal(c.Ctx.Input.RequestBody, &request)
-
-	if err != nil {
-		// err
-		c.Data["json"] = exceptions.Exception{
-			Status:  exceptions.InvalidParameter,
-			Message: "参数错误",
-		}
-		c.ServeJSON()
-		return
-	}
 
 	message := dtos.RandomMessage{
 		Request: request,
@@ -37,16 +17,13 @@ func (c *RandomController) Post() {
 
 	if exception != nil {
 		// err
-		c.Data["json"] = exception
-		c.ServeJSON()
-		return
+		return c.JSON(200, exception)
 	}
 
-	c.Data["json"] = dtos.BaseMessage{
+	return c.JSON(200, dtos.BaseMessage{
 		Status:  0,
 		Message: "success",
 		Data:    message.Response,
-	}
-
-	c.ServeJSON()
+	})
 }
+

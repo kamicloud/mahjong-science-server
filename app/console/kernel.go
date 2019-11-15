@@ -1,8 +1,8 @@
 package console
 
 import (
-	"github.com/robfig/cron/v3"
 	"github.com/kamicloud/mahjong-science-server/app/console/commands"
+	"github.com/robfig/cron/v3"
 )
 
 func init() {

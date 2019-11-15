@@ -1,13 +1,18 @@
 package main
 
 import (
-	"github.com/astaxie/beego"
 	_ "github.com/kamicloud/mahjong-science-server/app"
 	_ "github.com/kamicloud/mahjong-science-server/app/console"
-	_ "github.com/kamicloud/mahjong-science-server/routers"
+	"github.com/kamicloud/mahjong-science-server/routers"
+	"github.com/labstack/echo"
 )
 
+
 func main() {
-	beego.Run()
+	e := echo.New()
+
+	routers.Routes(e)
+
+	e.Logger.Fatal(e.Start(":8080"))
 }
 

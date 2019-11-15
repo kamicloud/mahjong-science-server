@@ -2,41 +2,38 @@ package controllers
 
 import (
 	"encoding/json"
-	"github.com/astaxie/beego"
 	"github.com/kamicloud/mahjong-science-server/app/http/dtos"
 	"github.com/kamicloud/mahjong-science-server/app/utils"
+	"github.com/labstack/echo"
 )
 
-type RankController struct {
-	beego.Controller
-}
+func Rank(c echo.Context) error {
 
-func (c *RankController) Get() {
 	bm := utils.Cache
 
 	rank4 := &[]*dtos.Rank{}
 	rank3 := &[]*dtos.Rank{}
 
-	if !bm.IsExist("rank3") || !bm.IsExist("rank4") {
-		c.Data["json"] = dtos.BaseMessage{
+	cache4, found4 := bm.Get("rank4")
+	cache3, found3 := bm.Get("rank3")
+
+	if !found3 || !found4 {
+		return c.JSON(200, dtos.BaseMessage{
 			Status:  400,
 			Message: "failed",
 			Data:    nil,
-		}
-		c.ServeJSON()
-		return
+		})
 	}
 
-	json.Unmarshal(bm.Get("rank4").([]byte), rank4)
-	json.Unmarshal(bm.Get("rank3").([]byte), rank3)
+	json.Unmarshal(cache4.([]byte), rank4)
+	json.Unmarshal(cache3.([]byte), rank3)
 
-	c.Data["json"] = dtos.BaseMessage{
+	return c.JSON(200, dtos.BaseMessage{
 		Status:  0,
 		Message: "success",
 		Data:    map[string]interface{}{
 			"rank3": rank3,
 			"rank4": rank4,
 		},
-	}
-	c.ServeJSON()
+	})
 }

@@ -3,3 +3,4 @@ vendor/
 node_modules/
 /extendRes/
 /res/
+conf/config.yml
