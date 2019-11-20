@@ -8,10 +8,11 @@ import (
 func init() {
 	c := cron.New()
 	// 每天3点同步排行
-	_, _ = c.AddFunc("0 0 3 * *", commands.SyncRank)
-	c.Start()
+	_, _ = c.AddFunc("* 3 * * *", commands.SyncRank)
+	go c.Start()
+	defer c.Stop()
 
-	startUp()
+	go startUp()
 }
 
 func startUp() {

@@ -19,8 +19,8 @@ const Players4 uint32 = 1
 const Players3 uint32 = 2
 
 func SyncRank() {
-	fmt.Println("Every hour on the half hour")
-
+	fmt.Println("Sync rank cron")
+	
 	if err := syncRank(Players3); err != nil {
 	}
 	if err := syncRank(Players4); err != nil {
