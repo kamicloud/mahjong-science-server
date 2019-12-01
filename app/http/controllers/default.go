@@ -1,14 +1,10 @@
 package controllers
 
 import (
-	"github.com/kamicloud/mahjong-science-server/app/http/dtos"
 	"github.com/labstack/echo"
+	"net/http"
 )
 
 func Default(c echo.Context) error {
-	return c.JSON(200, dtos.BaseMessage{
-		Status:  0,
-		Message: "success",
-		Data:    nil,
-	})
+	return c.HTML(http.StatusNotFound, "备案中，网站关闭。")
 }
