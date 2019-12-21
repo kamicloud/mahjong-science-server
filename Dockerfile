@@ -12,7 +12,4 @@ RUN go test -v github.com/kamicloud/mahjong-science-server
 # expecting to install successfully
 RUN go install -v github.com/kamicloud/mahjong-science-server
 
-RUN $GOPATH/bin/mahjong-science-server -h || true
-
 ENV PATH $GOPATH/bin:$PATH
-CMD ["mahjong-science-server"]
