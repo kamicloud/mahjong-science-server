@@ -1,6 +1,7 @@
 package console
 
 import (
+	"github.com/kamicloud/mahjong-science-server/app"
 	"github.com/kamicloud/mahjong-science-server/app/console/commands"
 	"github.com/robfig/cron/v3"
 )
@@ -16,5 +17,7 @@ func init() {
 }
 
 func startUp() {
-	commands.SyncRank()
+	if app.Config.Runmode == "prod" {
+		commands.SyncRank()
+	}
 }
