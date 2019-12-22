@@ -15,7 +15,7 @@ var wxa *miniprogram.MiniProgram
 func init() {
 	memCache := cache.NewMemcache(app.Config.Memcached)
 	config := &wechat.Config{
-		AppID:     app.Config.AppId,
+		AppID:     app.Config.AppID,
 		AppSecret: app.Config.AppSecret,
 		Cache:     memCache,
 	}
@@ -24,6 +24,7 @@ func init() {
 	wxa = wc.GetMiniProgram()
 }
 
+// WechatCodeToSession code转换session
 func WechatCodeToSession(c echo.Context) error {
 	var request dtos.CodeToSessionRequest
 	var err error
@@ -40,4 +41,3 @@ func WechatCodeToSession(c echo.Context) error {
 
 	return c.JSON(200, result)
 }
-
