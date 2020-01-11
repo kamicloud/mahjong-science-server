@@ -3,3 +3,4 @@ vendor/
 node_modules/
 /extendRes/
 conf/config.yml
+__debug_bin

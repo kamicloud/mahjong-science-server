@@ -1,17 +1,13 @@
 package commands
 
 import (
-	"crypto/hmac"
-	"crypto/sha256"
 	"encoding/json"
 	"fmt"
 	"github.com/EndlessCheng/mahjong-helper/platform/majsoul/api"
 	"github.com/EndlessCheng/mahjong-helper/platform/majsoul/proto/lq"
-	"github.com/EndlessCheng/mahjong-helper/platform/majsoul/tool"
-	"github.com/kamicloud/mahjong-science-server/app"
 	"github.com/kamicloud/mahjong-science-server/app/utils"
-	uuid "github.com/satori/go.uuid"
-	"os"
+	"github.com/kamicloud/mahjong-science-server/app/utils/majsoul"
+
 	"time"
 )
 
@@ -20,7 +16,7 @@ const Players3 uint32 = 2
 
 func SyncRank() {
 	fmt.Println("Sync rank cron")
-	
+
 	if err := syncRank(Players3); err != nil {
 	}
 	if err := syncRank(Players4); err != nil {
@@ -29,65 +25,25 @@ func SyncRank() {
 
 type PlayerInfos []*lq.PlayerBaseView
 
-func genReqLogin(username string, password string) (*lq.ReqLogin, error) {
-	const key = "lailai" // from code.js
-	mac := hmac.New(sha256.New, []byte(key))
-	mac.Write([]byte(password))
-	password = fmt.Sprintf("%x", mac.Sum(nil))
-
-	// randomKey 最好是个固定值
-	randomKey, ok := os.LookupEnv("RANDOM_KEY")
-	if !ok {
-		rawRandomKey, _ := uuid.NewV4()
-		randomKey = rawRandomKey.String()
-	}
-
-	version, err := tool.GetMajsoulVersion(tool.ApiGetVersionZH)
-	if err != nil {
-		return nil, err
-	}
-	return &lq.ReqLogin{
-		Account:   username,
-		Password:  password,
-		Reconnect: false,
-		Device: &lq.ClientDeviceInfo{
-			DeviceType: "pc",
-			Os:         "",
-			OsVersion:  "",
-			Browser:    "safari",
-		},
-		RandomKey:         randomKey,          // 例如 aa566cfc-547e-4cc0-a36f-2ebe6269109b
-		ClientVersion:     version.ResVersion, // 0.5.162.w
-		GenAccessToken:    true,
-		CurrencyPlatforms: []uint32{2}, // 1-inGooglePlay, 2-inChina
-	}, nil
+type GameLiveModel struct {
+	lq.GameLiveHead
+	_id string
 }
 
 func syncRank(tp uint32) error {
-	username := app.Config.Username
-	password := app.Config.Password
+	client, err := majsoul.GetClient()
 
-	endpoint, err := tool.GetMajsoulWebSocketURL()
 	if err != nil {
 		return err
 	}
-	c := api.NewWebSocketClient()
-	if err := c.Connect(endpoint, tool.MajsoulOriginURL); err != nil {
-		return err
-	}
-	defer c.Close()
 
-	// 登录
-	reqLogin, err := genReqLogin(username, password)
+	err = majsoul.Login()
+
 	if err != nil {
 		return err
 	}
-	if _, err := c.Login(reqLogin); err != nil {
-		return err
-	}
-	defer c.Logout(&lq.ReqLogout{})
 
-	resp, err := c.FetchLevelLeaderboard(&lq.ReqLevelLeaderboard{
+	resp, err := client.FetchLevelLeaderboard(&lq.ReqLevelLeaderboard{
 		Type: tp,
 	})
 	if err != nil {
@@ -97,12 +53,12 @@ func syncRank(tp uint32) error {
 	var leaderPlayers = make(map[uint32]*lq.PlayerBaseView)
 
 	for i := 0; i < len(resp.Items); i += 20 {
-		items := resp.Items[i: i + 20]
+		items := resp.Items[i : i+20]
 		var ids []uint32
 		for _, v := range items {
 			ids = append(ids, v.GetAccountId())
 		}
-		players, err := fetchUserProfiles(c, ids)
+		players, err := fetchUserProfiles(client, ids)
 		if err != nil {
 			return err
 		}
@@ -132,7 +88,7 @@ func syncRank(tp uint32) error {
 	} else {
 		memKey = "rank3"
 	}
-	bm.Set(memKey, cacheValue, 86400 * 2 * time.Second)
+	bm.Set(memKey, cacheValue, 86400*2*time.Second)
 
 	return nil
 }

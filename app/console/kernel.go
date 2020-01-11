@@ -10,6 +10,7 @@ func init() {
 	c := cron.New()
 	// 每天3点同步排行
 	_, _ = c.AddFunc("* 3 * * *", commands.SyncRank)
+	_, _ = c.AddFunc("* * * * *", commands.Spider)
 	go c.Start()
 	defer c.Stop()
 
@@ -18,6 +19,7 @@ func init() {
 
 func startUp() {
 	if app.Config.Runmode == "prod" {
+		commands.Spider()
 		commands.SyncRank()
 	}
 }
