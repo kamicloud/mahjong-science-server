@@ -20,8 +20,8 @@ func startUp() {
 		commands.Spider()
 	}
 	cronInstance = cron.New()
-	// 每20分钟重连一次
-	_, _ = cronInstance.AddFunc("*/20 * * * *", commands.MajsoulConnector)
+	// 每分钟心跳检查
+	_, _ = cronInstance.AddFunc("* * * * *", commands.MajsoulConnector)
 	// 每天3点同步排行
 	_, _ = cronInstance.AddFunc("0 3 * * *", commands.SyncRank)
 	// 每分钟拉取观战

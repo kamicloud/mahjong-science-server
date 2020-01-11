@@ -7,6 +7,7 @@ import "fmt"
 // MajsoulConnector 连接雀魂服务器
 func MajsoulConnector() {
 	fmt.Println("Command MajsoulConnector")
+
 	_, err := majsoul.GetClient()
 
 	if err != nil {

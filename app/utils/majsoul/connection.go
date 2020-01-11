@@ -19,10 +19,6 @@ var client *api.WebSocketClient
 func init() {
 	username = app.Config.Username
 	password = app.Config.Password
-
-	if client == nil {
-		client, _ = getClient()
-	}
 }
 
 func Login() error {
@@ -73,7 +69,7 @@ func genReqLogin(username string, password string) (*lq.ReqLogin, error) {
 
 func GetClient() (*api.WebSocketClient, error) {
 	var err error
-	if client == nil {
+	if !checkConnection() {
 		client, err = getClient()
 
 		if err != nil {
@@ -82,6 +78,16 @@ func GetClient() (*api.WebSocketClient, error) {
 	}
 
 	return client, nil
+}
+
+func checkConnection() bool {
+	if client == nil {
+		return false
+	}
+
+	_, err := client.Heatbeat(&lq.ReqHeatBeat{})
+
+	return err == nil
 }
 
 func Close() error {

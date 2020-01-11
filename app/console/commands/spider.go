@@ -45,12 +45,14 @@ func spider() error {
 			return err
 		}
 
-		fmt.Println("Got " + gameLiveType.Name1Chs + " " + gameLiveType.Name2Chs + " paipu " + strconv.Itoa(len(resp.LiveList)))
+		id := strconv.Itoa(gameLiveType.ID)
+
+		fmt.Println("Got " + id + " " + gameLiveType.Name1Chs + " " + gameLiveType.Name2Chs + " paipu " + strconv.Itoa(len(resp.LiveList)))
 		for j := 0; j < len(resp.LiveList); j++ {
 			gameLive := resp.LiveList[j]
-			collection, ctx := utils.GetCollection("majsoul", "paipu_"+strconv.Itoa(gameLiveType.ID))
+			collection := utils.GetCollection("majsoul", "paipu_"+id)
 
-			storeGameLiveList(ctx, collection, gameLive)
+			storeGameLiveList(collection, gameLive)
 		}
 
 	}
@@ -58,16 +60,16 @@ func spider() error {
 	return nil
 }
 
-func storeGameLiveList(ctx context.Context, collection *mongo.Collection, head *lq.GameLiveHead) {
+func storeGameLiveList(collection *mongo.Collection, head *lq.GameLiveHead) {
 	exists := &lq.GameLiveHead{}
 
-	err := collection.FindOne(ctx, bson.M{
+	err := collection.FindOne(context.TODO(), bson.M{
 		"uuid": head.Uuid,
 	}).Decode(exists)
 
 	if err != nil {
 		//data := utils.Struct2Map(*resp1.LiveList[i])
-		res, err := collection.InsertOne(ctx, head)
+		res, err := collection.InsertOne(context.TODO(), head)
 		//res, err := collection.InsertOne(ctx, bson.M{"name": "pi", "value": 3.14159})
 		//id := res.InsertedID
 		fmt.Println("StoreGameLive", res, err)
