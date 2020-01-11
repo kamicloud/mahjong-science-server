@@ -8,6 +8,7 @@ mysqlpass: "123456"
 mysqlurls: "127.0.0.1"
 mysqldb  : "mss"
 
+mongo: "mongodb://localhost:27017"
 
 username:
 password:

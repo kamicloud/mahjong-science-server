@@ -2,6 +2,7 @@ package utils
 
 import (
 	"context"
+	"github.com/kamicloud/mahjong-science-server/app"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"time"
@@ -10,7 +11,7 @@ import (
 // GetClient 获取连接
 func GetClient() (*mongo.Client, context.Context, error) {
 	ctx, _ := context.WithTimeout(context.Background(), 100000*time.Second)
-	client, err := mongo.Connect(ctx, options.Client().ApplyURI("mongodb://localhost:27017"))
+	client, err := mongo.Connect(ctx, options.Client().ApplyURI(app.Config.Mongo))
 
 	return client, ctx, err
 }

@@ -9,4 +9,5 @@ var Config = struct {
 	Memcached string
 	AppID     string
 	AppSecret string
+	Mongo     string
 }{}
