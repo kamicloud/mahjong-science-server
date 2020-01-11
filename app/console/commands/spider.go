@@ -35,8 +35,7 @@ func spider() error {
 		return err
 	}
 
-	for i := 0; i < len(gameLiveTypes); i++ {
-		gameLiveType := gameLiveTypes[i]
+	for _, gameLiveType := range *gameLiveTypes {
 		resp, err := client.FetchGameLiveList(&lq.ReqGameLiveList{
 			FilterId: uint32(gameLiveType.ID),
 		})

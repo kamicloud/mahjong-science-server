@@ -1,14 +1,19 @@
 package main
 
 import (
+	"fmt"
+	"net/http"
+	"time"
+
 	_ "github.com/kamicloud/mahjong-science-server/app"
 	_ "github.com/kamicloud/mahjong-science-server/app/console"
 	"github.com/kamicloud/mahjong-science-server/routers"
 	"github.com/labstack/echo"
-	"net/http"
 )
 
 func main() {
+	time.FixedZone("CST", 8*3600)
+	fmt.Println(time.Now())
 	e := echo.New()
 
 	routers.Routes(e)

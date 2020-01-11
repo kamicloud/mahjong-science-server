@@ -6,6 +6,7 @@ ADD . $GOPATH/src/github.com/kamicloud/mahjong-science-server/
 # # expecting to fetch dependencies successfully.
 RUN go get -v github.com/kamicloud/mahjong-science-server
 
+COPY storage storage
 # # expecting to run the test successfully.
 # RUN go test -v github.com/kamicloud/mahjong-science-server
 
