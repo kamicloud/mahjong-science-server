@@ -15,11 +15,13 @@ const Players4 uint32 = 1
 const Players3 uint32 = 2
 
 func SyncRank() {
-	fmt.Println("Sync rank cron")
+	fmt.Println("Command SyncRank")
 
 	if err := syncRank(Players3); err != nil {
+		fmt.Println(err)
 	}
 	if err := syncRank(Players4); err != nil {
+		fmt.Println(err)
 	}
 }
 
@@ -32,12 +34,6 @@ type GameLiveModel struct {
 
 func syncRank(tp uint32) error {
 	client, err := majsoul.GetClient()
-
-	if err != nil {
-		return err
-	}
-
-	err = majsoul.Login()
 
 	if err != nil {
 		return err

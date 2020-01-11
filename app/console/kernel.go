@@ -6,20 +6,32 @@ import (
 	"github.com/robfig/cron/v3"
 )
 
-func init() {
-	c := cron.New()
-	// 每天3点同步排行
-	_, _ = c.AddFunc("* 3 * * *", commands.SyncRank)
-	_, _ = c.AddFunc("* * * * *", commands.Spider)
-	go c.Start()
-	defer c.Stop()
+var cronInstance *cron.Cron = nil
 
+func init() {
 	go startUp()
 }
 
 func startUp() {
+	// 初始化
 	if app.Config.Runmode == "prod" {
-		commands.Spider()
+		commands.MajsoulConnector()
 		commands.SyncRank()
+		commands.Spider()
+	}
+	cronInstance = cron.New()
+	// 每20分钟重连一次
+	_, _ = cronInstance.AddFunc("*/20 * * * *", commands.MajsoulConnector)
+	// 每天3点同步排行
+	_, _ = cronInstance.AddFunc("0 3 * * *", commands.SyncRank)
+	// 每分钟拉取观战
+	_, _ = cronInstance.AddFunc("* * * * *", commands.Spider)
+
+	go cronInstance.Start()
+}
+
+func Stop() {
+	if cronInstance != nil {
+		cronInstance.Stop()
 	}
 }

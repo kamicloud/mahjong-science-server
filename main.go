@@ -8,7 +8,6 @@ import (
 	"net/http"
 )
 
-
 func main() {
 	e := echo.New()
 
@@ -19,11 +18,10 @@ func main() {
 			if err := next(c); err != nil {
 				return c.HTML(http.StatusNotFound, "备案中，网站关闭。")
 			}
-			
+
 			return nil
 		}
 	})
 
 	e.Logger.Fatal(e.Start(":8080"))
 }
-

@@ -32,21 +32,10 @@ func Login() error {
 		return err
 	}
 
-	_, err = client.Heatbeat(&lq.ReqHeatBeat{
-		NoOperationCounter: 0,
-	})
+	_, err = client.Login(reqLogin)
 
-	if err != nil {
-		_, err = client.Login(reqLogin)
-
-		if err != nil {
-			return err
-		}
-	}
-
-	return nil
+	return err
 }
-
 
 func genReqLogin(username string, password string) (*lq.ReqLogin, error) {
 	const key = "lailai" // from code.js
@@ -91,7 +80,6 @@ func GetClient() (*api.WebSocketClient, error) {
 			return nil, err
 		}
 	}
-
 
 	return client, nil
 }

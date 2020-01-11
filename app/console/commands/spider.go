@@ -3,37 +3,33 @@ package commands
 import (
 	"context"
 	"fmt"
+	"strconv"
+	"sync"
+
 	"github.com/EndlessCheng/mahjong-helper/platform/majsoul/proto/lq"
 	"github.com/kamicloud/mahjong-science-server/app/utils"
 	"github.com/kamicloud/mahjong-science-server/app/utils/majsoul"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
-	"strconv"
 )
 
-var lock bool
+var mutex sync.Mutex
 
 // Spider 牌谱爬虫
 func Spider() {
-	fmt.Println("Spider running!")
-	if lock {
-		return
-	}
-	lock = true
+	fmt.Println("Command Spider")
+
+	mutex.Lock()
+	defer mutex.Unlock()
+
+	fmt.Println("Command Spider Start")
 	spider()
-	lock = false
 }
 
 func spider() error {
 	gameLiveTypes := utils.GetGameLiveTypes()
 
 	client, err := majsoul.GetClient()
-
-	if err != nil {
-		return err
-	}
-
-	err = majsoul.Login()
 
 	if err != nil {
 		return err
