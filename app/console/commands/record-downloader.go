@@ -18,8 +18,19 @@ import (
 	"github.com/kamicloud/mahjong-science-server/app/utils"
 	"github.com/kamicloud/mahjong-science-server/app/utils/majsoul"
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/mongo"
 	"golang.org/x/net/context"
 )
+
+type messageWithType struct {
+	Name string        `json:"name"`
+	Data proto.Message `json:"data"`
+}
+
+type FullRecord struct {
+	Head    *lq.RecordGame    `json:"head"`
+	Details []messageWithType `json:"details"`
+}
 
 // RecordDownloader 下载牌谱
 func RecordDownloader() {
@@ -50,7 +61,7 @@ func RecordDownloader() {
 			// do something with result....
 			// uuid := "200111-cc4cfd9e-bac9-45f7-abfd-59b5e472d1bc"
 			uuid := result.Uuid
-			err = download(uuid)
+			err = download(id, uuid)
 
 			if err != nil {
 				fmt.Println(err, uuid)
@@ -93,7 +104,7 @@ func RecordDownloader() {
 	}
 }
 
-func download(uuid string) error {
+func download(roomID string, uuid string) error {
 	client, err := majsoul.GetClient()
 	if err != nil {
 		fmt.Println(err)
@@ -124,11 +135,6 @@ func download(uuid string) error {
 	if err := api.UnwrapMessage(data, &detailRecords); err != nil {
 		return err
 	}
-
-	type messageWithType struct {
-		Name string        `json:"name"`
-		Data proto.Message `json:"data"`
-	}
 	details := []messageWithType{}
 	for _, detailRecord := range detailRecords.GetRecords() {
 		name, data, err := api.UnwrapData(detailRecord)
@@ -153,10 +159,7 @@ func download(uuid string) error {
 	}
 
 	// 保存至本地（JSON 格式）
-	parseResult := struct {
-		Head    *lq.RecordGame    `json:"head"`
-		Details []messageWithType `json:"details"`
-	}{
+	parseResult := FullRecord{
 		Head:    respGameRecord.Head,
 		Details: details,
 	}
@@ -168,5 +171,51 @@ func download(uuid string) error {
 		return err
 	}
 
-	return nil
+	collection := utils.GetCollection("majsoul", "heads_"+roomID)
+	err = storeHead(collection, respGameRecord.Head)
+	if err != nil {
+		return err
+	}
+
+	collection = utils.GetCollection("majsoul", "records_"+roomID)
+
+	err = storeRecord(collection, &parseResult)
+
+	return err
+}
+
+func storeHead(collection *mongo.Collection, head *lq.RecordGame) error {
+	exists := &lq.GameLiveHead{}
+
+	err := collection.FindOne(context.TODO(), bson.M{
+		"uuid": head.Uuid,
+	}).Decode(exists)
+
+	if err != nil {
+		//data := utils.Struct2Map(*resp1.LiveList[i])
+		res, err := collection.InsertOne(context.TODO(), head)
+		//res, err := collection.InsertOne(ctx, bson.M{"name": "pi", "value": 3.14159})
+		//id := res.InsertedID
+		fmt.Println("StoreGameHead", res, err)
+	}
+
+	return err
+}
+
+func storeRecord(collection *mongo.Collection, record *FullRecord) error {
+	exists := &lq.GameLiveHead{}
+
+	err := collection.FindOne(context.TODO(), bson.M{
+		"uuid": record.Head.Uuid,
+	}).Decode(exists)
+
+	if err != nil {
+		//data := utils.Struct2Map(*resp1.LiveList[i])
+		res, err := collection.InsertOne(context.TODO(), record)
+		//res, err := collection.InsertOne(ctx, bson.M{"name": "pi", "value": 3.14159})
+		//id := res.InsertedID
+		fmt.Println("StoreGameRecord", res, err)
+	}
+
+	return err
 }

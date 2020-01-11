@@ -1,5 +1,8 @@
 FROM golang
 
+
+RUN apt-update && apt install tzdata && echo "Asia/Shanghai" > /etc/timezone && \
+    dpkg-reconfigure -f noninteractive tzdata
 RUN mkdir -p $GOPATH/src/github.com/kamicloud/mahjong-science-server/
 ADD . $GOPATH/src/github.com/kamicloud/mahjong-science-server/
 
