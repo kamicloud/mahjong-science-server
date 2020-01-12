@@ -34,7 +34,7 @@ func (majsoulConnector *MajsoulConnector) handle() {
 		return
 	}
 
-	if !majsoul.CheckConnection() {
+	if !majsoul.CheckLogin() {
 		err = majsoul.Login()
 	}
 

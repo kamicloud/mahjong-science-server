@@ -100,6 +100,16 @@ func CheckConnection() bool {
 	return err == nil
 }
 
+func CheckLogin() bool {
+	if client == nil {
+		return false
+	}
+
+	_, err := client.LoginBeat(&lq.ReqLoginBeat{})
+
+	return err == nil
+}
+
 func Close() error {
 	if client == nil {
 		return nil
