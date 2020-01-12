@@ -9,11 +9,13 @@ import (
 	_ "github.com/kamicloud/mahjong-science-server/app/console"
 	"github.com/kamicloud/mahjong-science-server/routers"
 	"github.com/labstack/echo"
+	"github.com/sirupsen/logrus"
 )
 
 func main() {
-	time.FixedZone("CST", 8*3600)
+	time.LoadLocation("Asia/Shanghai")
 	fmt.Println(time.Now())
+	logrus.Info("========== System Start ==========")
 	e := echo.New()
 
 	routers.Routes(e)

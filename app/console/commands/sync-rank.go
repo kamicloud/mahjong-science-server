@@ -7,6 +7,7 @@ import (
 	"github.com/EndlessCheng/mahjong-helper/platform/majsoul/proto/lq"
 	"github.com/kamicloud/mahjong-science-server/app/utils"
 	"github.com/kamicloud/mahjong-science-server/app/utils/majsoul"
+	"github.com/sirupsen/logrus"
 
 	"time"
 )
@@ -14,17 +15,9 @@ import (
 const Players4 uint32 = 1
 const Players3 uint32 = 2
 
-func SyncRank() {
-	fmt.Println("Command SyncRank")
-
-	if err := syncRank(Players3); err != nil {
-		fmt.Println(err)
-	}
-	if err := syncRank(Players4); err != nil {
-		fmt.Println(err)
-	}
+type SyncRank struct {
+	baseCommand BaseCommand
 }
-
 type PlayerInfos []*lq.PlayerBaseView
 
 type GameLiveModel struct {
@@ -32,8 +25,25 @@ type GameLiveModel struct {
 	_id string
 }
 
-func syncRank(tp uint32) error {
-	client, err := majsoul.GetClient()
+func (syncRank *SyncRank) Handle() {
+	logrus.Info("Command SyncRank")
+	logrus.Info("Command SyncRank Start")
+	syncRank.baseCommand.Handle(syncRank.handle)
+	logrus.Info("Command SyncRank Done")
+}
+
+func (syncRank *SyncRank) handle() {
+
+	if err := syncRank.syncRank(Players3); err != nil {
+		fmt.Println(err)
+	}
+	if err := syncRank.syncRank(Players4); err != nil {
+		fmt.Println(err)
+	}
+}
+
+func (syncRank *SyncRank) syncRank(tp uint32) error {
+	client, err := majsoul.GetClient(false)
 
 	if err != nil {
 		return err

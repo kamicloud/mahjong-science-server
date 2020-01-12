@@ -8,8 +8,10 @@ import (
 	"github.com/EndlessCheng/mahjong-helper/platform/majsoul/proto/lq"
 	"github.com/EndlessCheng/mahjong-helper/platform/majsoul/tool"
 	"github.com/kamicloud/mahjong-science-server/app"
+	"github.com/kamicloud/mahjong-science-server/app/exceptions"
 	uuid "github.com/satori/go.uuid"
 	"os"
+	"sync"
 )
 
 var username string
@@ -67,9 +69,13 @@ func genReqLogin(username string, password string) (*lq.ReqLogin, error) {
 	}, nil
 }
 
-func GetClient() (*api.WebSocketClient, error) {
+var clinetMutex sync.Mutex
+
+func GetClient(reconnect bool) (*api.WebSocketClient, error) {
 	var err error
-	if !checkConnection() {
+	clinetMutex.Lock()
+	defer clinetMutex.Unlock()
+	if reconnect && !CheckConnection() {
 		client, err = getClient()
 
 		if err != nil {
@@ -77,10 +83,14 @@ func GetClient() (*api.WebSocketClient, error) {
 		}
 	}
 
+	if client == nil {
+		return nil, &exceptions.MajsoulConnectionError{}
+	}
+
 	return client, nil
 }
 
-func checkConnection() bool {
+func CheckConnection() bool {
 	if client == nil {
 		return false
 	}

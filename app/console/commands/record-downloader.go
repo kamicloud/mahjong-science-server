@@ -4,9 +4,10 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
-	"log"
+	"os"
 	"reflect"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/EndlessCheng/mahjong-helper/platform/majsoul/api"
@@ -17,6 +18,7 @@ import (
 	"github.com/kamicloud/mahjong-science-server/app"
 	"github.com/kamicloud/mahjong-science-server/app/utils"
 	"github.com/kamicloud/mahjong-science-server/app/utils/majsoul"
+	"github.com/sirupsen/logrus"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"golang.org/x/net/context"
@@ -33,13 +35,30 @@ type FullRecord struct {
 }
 
 // RecordDownloader 下载牌谱
-func RecordDownloader() {
+type RecordDownloader struct {
+	baseCommand BaseCommand
+}
+
+func (recordDownloader *RecordDownloader) Handle() {
+	logrus.Info("Command RecordDownloader")
+
+	recordDownloader.baseCommand.mutex.Lock()
+	defer recordDownloader.baseCommand.mutex.Unlock()
+
+	logrus.Info("Command RecordDownloader Start")
+	recordDownloader.baseCommand.Handle(recordDownloader.handle)
+	logrus.Info("Command RecordDownloader Done")
+}
+
+// Handle 处理公共方法
+func (recordDownloader *RecordDownloader) handle() {
 	now := time.Now()
 	gameLiveTypes := utils.GetGameLiveTypes()
 
 	for _, gameLiveType := range *gameLiveTypes {
-		id := strconv.Itoa(gameLiveType.ID)
-		collection := utils.GetCollection("majsoul", "paipu_"+id)
+		roomID := strconv.Itoa(gameLiveType.ID)
+		logrus.Info("处理观战类型 " + roomID)
+		collection := utils.GetCollection("majsoul", "paipu_"+roomID)
 		cur, err := collection.Find(context.TODO(), bson.M{
 			"starttime": bson.M{
 				"$lt": now.Unix() - 7200,
@@ -53,38 +72,41 @@ func RecordDownloader() {
 		}
 
 		for cur.Next(context.TODO()) {
+			time.Sleep(time.Second * 1)
 			var result *lq.GameLiveHead
 			err := cur.Decode(&result)
 			if err != nil {
-				log.Fatal(err)
+				logrus.Error(err)
 			}
-			// do something with result....
 			// uuid := "200111-cc4cfd9e-bac9-45f7-abfd-59b5e472d1bc"
 			uuid := result.Uuid
-			err = download(id, uuid)
+			logrus.Info("处理完整牌谱 " + uuid)
+			err = recordDownloader.download(roomID, uuid)
 
 			if err != nil {
-				fmt.Println(err, uuid)
-				continue
+				logrus.Error(err, uuid)
+				return
 			}
 			ossClient, err := oss.New("oss-cn-hangzhou.aliyuncs.com", app.Config.Osskey, app.Config.Osssecret)
 			if err != nil {
-				fmt.Println(err)
+				logrus.Error(err)
 				continue
 			}
 
 			bucket, err := ossClient.Bucket("kamicloud")
 			if err != nil {
-				fmt.Println(err)
+				logrus.Error(err)
 				continue
 			}
 
-			err = bucket.PutObjectFromFile("mahjong-science/records/"+uuid+".json", app.Config.Recordspath+"/"+uuid+".json")
+			filePath := recordDownloader.buildStorePath(roomID, uuid)
+
+			err = bucket.PutObjectFromFile(app.Config.Ossrecordpath+uuid+".json", filePath)
 			if err != nil {
 				fmt.Println(err)
 				continue
 			}
-			updateRes, err := collection.UpdateOne(context.TODO(), bson.M{
+			_, err = collection.UpdateOne(context.TODO(), bson.M{
 				"uuid": bson.M{
 					"$eq": uuid,
 				},
@@ -94,20 +116,23 @@ func RecordDownloader() {
 				},
 			})
 			if err != nil {
-				fmt.Println(updateRes, err)
+				logrus.Error("更新失败 "+uuid, err)
+			} else {
+				logrus.Info("更新成功 " + uuid)
 			}
 		}
 
 		if err := cur.Err(); err != nil {
 			fmt.Println(err)
 		}
+		logrus.Info("处理观战类型完毕 " + roomID)
 	}
 }
 
-func download(roomID string, uuid string) error {
-	client, err := majsoul.GetClient()
+func (recordDownloader *RecordDownloader) download(roomID string, uuid string) error {
+	client, err := majsoul.GetClient(false)
 	if err != nil {
-		fmt.Println(err)
+		return err
 	}
 
 	// 获取具体牌谱内容
@@ -167,7 +192,10 @@ func download(roomID string, uuid string) error {
 	if err != nil {
 		return err
 	}
-	if err := ioutil.WriteFile(app.Config.Recordspath+"/"+uuid+".json", jsonData, 0644); err != nil {
+	filePath := recordDownloader.buildStorePath(roomID, uuid)
+	err = recordDownloader.storeFile(filePath, jsonData)
+
+	if err != nil {
 		return err
 	}
 
@@ -179,43 +207,61 @@ func download(roomID string, uuid string) error {
 
 	collection = utils.GetCollection("majsoul", "records_"+roomID)
 
-	err = storeRecord(collection, &parseResult)
+	err = recordDownloader.storeRecord(roomID, collection, &parseResult)
 
 	return err
 }
 
 func storeHead(collection *mongo.Collection, head *lq.RecordGame) error {
+	var err error
 	exists := &lq.GameLiveHead{}
 
-	err := collection.FindOne(context.TODO(), bson.M{
+	err = collection.FindOne(context.TODO(), bson.M{
 		"uuid": head.Uuid,
 	}).Decode(exists)
 
 	if err != nil {
-		//data := utils.Struct2Map(*resp1.LiveList[i])
-		res, err := collection.InsertOne(context.TODO(), head)
-		//res, err := collection.InsertOne(ctx, bson.M{"name": "pi", "value": 3.14159})
-		//id := res.InsertedID
-		fmt.Println("StoreGameHead", res, err)
+		_, err = collection.InsertOne(context.TODO(), head)
 	}
 
 	return err
 }
 
-func storeRecord(collection *mongo.Collection, record *FullRecord) error {
+func (recordDownloader *RecordDownloader) storeRecord(roomID string, collection *mongo.Collection, record *FullRecord) error {
+	var err error
 	exists := &lq.GameLiveHead{}
 
-	err := collection.FindOne(context.TODO(), bson.M{
+	err = collection.FindOne(context.TODO(), bson.M{
 		"uuid": record.Head.Uuid,
 	}).Decode(exists)
 
 	if err != nil {
 		//data := utils.Struct2Map(*resp1.LiveList[i])
-		res, err := collection.InsertOne(context.TODO(), record)
-		//res, err := collection.InsertOne(ctx, bson.M{"name": "pi", "value": 3.14159})
-		//id := res.InsertedID
-		fmt.Println("StoreGameRecord", res, err)
+		_, err = collection.InsertOne(context.TODO(), record)
 	}
+
+	return err
+}
+
+func (recordDownloader *RecordDownloader) buildStorePath(roomID string, uuid string) string {
+	// recordsPath/roomID/uuid
+	return app.Config.Recordspath + "/" + roomID + "/" + strings.Replace(uuid, "-", "/", -1)
+}
+
+func (recordDownloader *RecordDownloader) storeFile(filePath string, data []byte) error {
+	var err error
+	filePathArr := strings.Split(filePath, "/")
+	folderPath := strings.Join(filePathArr[0:len(filePathArr)-1], "/")
+	_, err = os.Stat(folderPath)
+
+	if err != nil {
+		err = os.MkdirAll(folderPath, os.ModeDir|os.ModePerm)
+		if err != nil {
+			return err
+		}
+	}
+
+	err = ioutil.WriteFile(filePath, data, 0644)
 
 	return err
 }
