@@ -13,7 +13,6 @@ import (
 	"github.com/EndlessCheng/mahjong-helper/platform/majsoul/api"
 	"github.com/EndlessCheng/mahjong-helper/platform/majsoul/proto/lq"
 	"github.com/EndlessCheng/mahjong-helper/platform/majsoul/tool"
-	"github.com/aliyun/aliyun-oss-go-sdk/oss"
 	"github.com/golang/protobuf/proto"
 	"github.com/kamicloud/mahjong-science-server/app"
 	"github.com/kamicloud/mahjong-science-server/app/utils"
@@ -87,25 +86,7 @@ func (recordDownloader *RecordDownloader) handle() {
 				logrus.Error(err, uuid)
 				return
 			}
-			ossClient, err := oss.New("oss-cn-hangzhou.aliyuncs.com", app.Config.Osskey, app.Config.Osssecret)
-			if err != nil {
-				logrus.Error(err)
-				continue
-			}
 
-			bucket, err := ossClient.Bucket("kamicloud")
-			if err != nil {
-				logrus.Error(err)
-				continue
-			}
-
-			filePath := recordDownloader.buildStorePath(roomID, uuid)
-
-			err = bucket.PutObjectFromFile(app.Config.Ossrecordpath+uuid+".json", filePath)
-			if err != nil {
-				fmt.Println(err)
-				continue
-			}
 			_, err = collection.UpdateOne(context.TODO(), bson.M{
 				"uuid": bson.M{
 					"$eq": uuid,
@@ -183,18 +164,11 @@ func (recordDownloader *RecordDownloader) download(roomID string, uuid string) e
 		})
 	}
 
-	// 保存至本地（JSON 格式）
 	parseResult := FullRecord{
 		Head:    respGameRecord.Head,
 		Details: details,
 	}
-	jsonData, err := json.Marshal(&parseResult)
-	if err != nil {
-		return err
-	}
-	filePath := recordDownloader.buildStorePath(roomID, uuid)
-	err = recordDownloader.storeFile(filePath, jsonData)
-
+	_, err = json.Marshal(&parseResult)
 	if err != nil {
 		return err
 	}
