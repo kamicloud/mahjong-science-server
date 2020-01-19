@@ -71,7 +71,7 @@ func (recordDownloader *RecordDownloader) handle() {
 		}
 
 		for cur.Next(context.TODO()) {
-			time.Sleep(time.Microsecond * 500)
+			time.Sleep(time.Second * 1)
 			var result *lq.GameLiveHead
 			err := cur.Decode(&result)
 			if err != nil {
