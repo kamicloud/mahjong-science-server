@@ -63,7 +63,7 @@ func (recordDownloader *RecordDownloader) handle() {
 				"$lt": now.Unix() - 7200,
 			},
 			"Done": bson.M{
-				"$exists": false,
+				"$ne": true,
 			},
 		})
 		if err != nil {
@@ -71,7 +71,7 @@ func (recordDownloader *RecordDownloader) handle() {
 		}
 
 		for cur.Next(context.TODO()) {
-			time.Sleep(time.Second * 1)
+			time.Sleep(time.Microsecond * 500)
 			var result *lq.GameLiveHead
 			err := cur.Decode(&result)
 			if err != nil {
@@ -79,13 +79,14 @@ func (recordDownloader *RecordDownloader) handle() {
 			}
 			// uuid := "200111-cc4cfd9e-bac9-45f7-abfd-59b5e472d1bc"
 			uuid := result.Uuid
-			logrus.Info("处理完整牌谱 " + uuid)
+			logrus.Info("处理完整牌谱 " + roomID + " " + uuid)
 			err = recordDownloader.download(roomID, uuid)
 
 			if err != nil {
 				logrus.Error(err, uuid)
 				return
 			}
+			logrus.Info("下载成功")
 
 			_, err = collection.UpdateOne(context.TODO(), bson.M{
 				"uuid": bson.M{
@@ -179,6 +180,9 @@ func (recordDownloader *RecordDownloader) download(roomID string, uuid string) e
 		return err
 	}
 
+	// collection = utils.GetCollection("majsoul", "accounts")
+	// storeAccount(collection, respGameRecord.Head)
+
 	collection = utils.GetCollection("majsoul", "records_"+roomID)
 
 	err = recordDownloader.storeRecord(roomID, collection, &parseResult)
@@ -199,6 +203,23 @@ func storeHead(collection *mongo.Collection, head *lq.RecordGame) error {
 	}
 
 	return err
+}
+
+func storeAccount(collection *mongo.Collection, head *lq.RecordGame) {
+	var err error
+	for _, account := range head.Accounts {
+		exists := &lq.RecordGame_AccountInfo{}
+		filter := bson.M{
+			"accountid": account.AccountId,
+		}
+		err = collection.FindOne(context.TODO(), filter).Decode(exists)
+
+		if err != nil {
+			collection.InsertOne(context.TODO(), account)
+		} else {
+			collection.UpdateOne(context.TODO(), filter, account)
+		}
+	}
 }
 
 func (recordDownloader *RecordDownloader) storeRecord(roomID string, collection *mongo.Collection, record *FullRecord) error {
