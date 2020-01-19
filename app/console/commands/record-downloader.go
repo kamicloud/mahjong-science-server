@@ -227,7 +227,7 @@ func (recordDownloader *RecordDownloader) storeRecord(roomID string, collection 
 	exists := &lq.GameLiveHead{}
 
 	err = collection.FindOne(context.TODO(), bson.M{
-		"uuid": record.Head.Uuid,
+		"head.uuid": record.Head.Uuid,
 	}).Decode(exists)
 
 	if err != nil {
