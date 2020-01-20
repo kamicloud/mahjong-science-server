@@ -2,9 +2,11 @@ package controllers
 
 import (
 	"encoding/json"
-	"github.com/labstack/echo"
 	"io/ioutil"
 	"net/http"
+
+	"github.com/labstack/echo"
+	"github.com/sirupsen/logrus"
 
 	"github.com/kamicloud/mahjong-science-server/app/http/dtos"
 )
@@ -16,14 +18,37 @@ func Proxy(c echo.Context) error {
 	request, err := http.NewRequest("GET", url, nil)
 
 	if err != nil {
-		panic(err)
+		if err != nil {
+			logrus.Error(err)
+			return c.JSON(200, dtos.BaseMessage{
+				Status:  0,
+				Message: "",
+				Data:    nil,
+			})
+		}
 	}
 	client := &http.Client{}
 
 	//处理返回结果
-	response, _ := client.Do(request)
+	response, err := client.Do(request)
+	if err != nil {
+		logrus.Error(err)
+		return c.JSON(200, dtos.BaseMessage{
+			Status:  0,
+			Message: "",
+			Data:    nil,
+		})
+	}
 	var value []byte
-	value, _ = ioutil.ReadAll(response.Body)
+	value, err = ioutil.ReadAll(response.Body)
+	if err != nil {
+		logrus.Error(err)
+		return c.JSON(200, dtos.BaseMessage{
+			Status:  0,
+			Message: "",
+			Data:    nil,
+		})
+	}
 	jsonobj := map[string]interface{}{}
 	jsonarr := []map[string]interface{}{}
 	json.Unmarshal(value, &jsonobj)
@@ -42,4 +67,3 @@ func Proxy(c echo.Context) error {
 		})
 	}
 }
-
