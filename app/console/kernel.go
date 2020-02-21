@@ -16,30 +16,30 @@ func init() {
 
 func startUp() {
 	majsoulConnector := commands.MajsoulConnector{}
-	recordDownloader := commands.RecordDownloader{}
-	spiderCommand := commands.SpiderCommand{}
+	// recordDownloader := commands.RecordDownloader{}
+	// spiderCommand := commands.SpiderCommand{}
 	syncRankCommand := commands.SyncRank{}
 
 	// 初始化
 	if app.Config.Runmode == "prod" {
 		majsoulConnector.Handle()
 		syncRankCommand.Handle()
-		spiderCommand.Handle()
-		recordDownloader.Handle()
+		// spiderCommand.Handle()
+		// recordDownloader.Handle()
+
+		cronInstance = cron.New(cron.WithLocation(time.FixedZone("CST", 8*3600)))
+
+		// 心跳检查
+		_, _ = cronInstance.AddFunc("* * * * *", majsoulConnector.Handle)
+		// 每天3点同步排行
+		_, _ = cronInstance.AddFunc("0 3 * * *", syncRankCommand.Handle)
+		// 每分钟拉取观战
+		// _, _ = cronInstance.AddFunc("* * * * *", spiderCommand.Handle)
+		// 拉取完整牌谱
+		// _, _ = cronInstance.AddFunc("* * * * *", recordDownloader.Handle)
+
+		go cronInstance.Start()
 	}
-
-	cronInstance = cron.New(cron.WithLocation(time.FixedZone("CST", 8*3600)))
-
-	// 心跳检查
-	_, _ = cronInstance.AddFunc("* * * * *", majsoulConnector.Handle)
-	// 每天3点同步排行
-	_, _ = cronInstance.AddFunc("0 3 * * *", syncRankCommand.Handle)
-	// 每分钟拉取观战
-	_, _ = cronInstance.AddFunc("* * * * *", spiderCommand.Handle)
-	// 拉取完整牌谱
-	_, _ = cronInstance.AddFunc("* * * * *", recordDownloader.Handle)
-
-	go cronInstance.Start()
 }
 
 // Stop 停止定时任务

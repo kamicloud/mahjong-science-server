@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"io/ioutil"
 	"net/http"
-	"strings"
 
 	"github.com/labstack/echo"
 	"github.com/sirupsen/logrus"
@@ -16,7 +15,7 @@ import (
 func Proxy(c echo.Context) error {
 	url := c.QueryParam("url")
 
-	url = strings.Replace(url, "ak-data-2.sapk.ch", "ak-data-1.sapk.ch", 1)
+	// url = strings.Replace(url, "ak-data-2.sapk.ch", "ak-data-1.sapk.ch", 1)
 
 	//提交请求
 	request, err := http.NewRequest("GET", url, nil)

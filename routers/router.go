@@ -17,4 +17,5 @@ func Routes(e *echo.Echo) {
 	e.GET("/mahjong/group", controllers.Group)
 	e.GET("/mahjong/proxy", controllers.Proxy)
 	e.GET("/mahjong/rank", controllers.Rank)
+	e.GET("/records/stats", controllers.Stats)
 }
