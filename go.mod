@@ -5,7 +5,6 @@ go 1.13
 require (
 	github.com/DataDog/zstd v1.4.4 // indirect
 	github.com/EndlessCheng/mahjong-helper v0.2.8-0.20191002032528-12dcda470dba
-	github.com/aliyun/aliyun-oss-go-sdk v2.0.4+incompatible
 	github.com/bradfitz/gomemcache v0.0.0-20190913173617-a41fca850d0b // indirect
 	github.com/go-stack/stack v1.8.0 // indirect
 	github.com/golang/protobuf v1.3.2
@@ -25,18 +24,13 @@ require (
 	github.com/satori/go.uuid v1.2.1-0.20181028125025-b2ce2384e17b
 	github.com/silenceper/wechat v2.0.1+incompatible
 	github.com/sirupsen/logrus v1.4.2
+	github.com/tidwall/pretty v1.2.1 // indirect
 	github.com/valyala/fasttemplate v1.1.0 // indirect
 	github.com/xdg/scram v0.0.0-20180814205039-7eeb5667e42c // indirect
 	github.com/xdg/stringprep v1.0.0 // indirect
 	go.mongodb.org/mongo-driver v1.2.0
-	golang.org/x/crypto v0.0.0-20191227163750-53104e6ec876 // indirect
-	golang.org/x/net v0.0.0-20191209160850-c0dbc17a3553
-	golang.org/x/sync v0.0.0-20190911185100-cd5d95a43a6e // indirect
-	golang.org/x/sys v0.0.0-20200107162124-548cf772de50 // indirect
-	golang.org/x/text v0.3.2 // indirect
-	golang.org/x/time v0.0.0-20191024005414-555d28b269f0 // indirect
+	golang.org/x/net v0.7.0
 	google.golang.org/genproto v0.0.0-20191223191004-3caeed10a8bf // indirect
 	google.golang.org/grpc v1.26.0 // indirect
 	gopkg.in/yaml.v2 v2.2.7 // indirect
-	moul.io/http2curl v1.0.0 // indirect
 )
